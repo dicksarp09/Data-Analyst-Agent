@@ -1,0 +1,101 @@
+{
+  "Phase 0: Data Integrity": {
+    "phase": "Phase 0: Data Integrity",
+    "metrics": {
+      "schema_accuracy": 1.0,
+      "total_rows": 200,
+      "valid_rows": 200,
+      "quarantined_rows": 0,
+      "outlier_detection": false,
+      "outlier_column_detected": null,
+      "sql_execution_success": true,
+      "filter_correctness": true
+    }
+  },
+  "Phase 1: Signal Discovery": {
+    "phase": "Phase 1: Signal Discovery",
+    "metrics": {
+      "total_signals": 11,
+      "signals_by_type": {
+        "correlation": 2,
+        "trend_break": 5,
+        "anomaly": 2,
+        "cluster": 1,
+        "distribution_shift": 1
+      },
+      "correlation_count": 2,
+      "known_correlations_found": 2,
+      "correlation_precision": 1.0,
+      "anomaly_count": 2,
+      "anomaly_detected": true,
+      "cluster_count": 1,
+      "trend_break_count": 5,
+      "high_confidence_signals": 11,
+      "signal_stability_ratio": 1.0
+    }
+  },
+  "Phase 2: Hypothesis Quality": {
+    "phase": "Phase 2: Hypothesis Quality",
+    "metrics": {
+      "total_hypotheses": 10,
+      "total_edges": 6,
+      "testable_hypotheses": 9,
+      "testability_rate": 0.9,
+      "grounded_hypotheses": 10,
+      "groundedness_rate": 1.0,
+      "hypothesis_types": {
+        "causal": 3,
+        "segment-based": 1,
+        "temporal": 5,
+        "data-quality": 1
+      },
+      "diversity_score": 4,
+      "score_range": 0.26,
+      "has_ranked_hypotheses": true,
+      "unique_descriptions": 10,
+      "redundancy_rate": 0.0
+    }
+  },
+  "Phase 3: Execution Quality": {
+    "phase": "Phase 3: Execution Quality",
+    "metrics": {
+      "accepted_count": 1,
+      "rejected_count": 0,
+      "total_iterations": 1,
+      "execution_status": "completed",
+      "execution_success": true,
+      "valid_decisions": 1,
+      "decision_accuracy": 1.0,
+      "loop_stable": true,
+      "convergence_rate": 1.0
+    }
+  },
+  "Phase 4: Insight + Plot Quality": {
+    "phase": "Phase 4: Insight + Plot Quality",
+    "metrics": {
+      "insight_count": 1,
+      "plot_count": 2,
+      "grounded_insights": 1,
+      "faithfulness_score": 1.0,
+      "misaligned_insights": 0,
+      "alignment_score": 1.0,
+      "valid_plots": 2,
+      "plot_validity_rate": 1.0,
+      "grounded_plots": 2,
+      "plot_grounding_score": 1.0,
+      "traceable_insights": 1,
+      "traceability_score": 1.0
+    }
+  },
+  "Cross-Phase Evaluation": {
+    "phase": "Cross-Phase Evaluation",
+    "metrics": {
+      "data_to_signals": true,
+      "signals_to_hypotheses": true,
+      "hypotheses_executed": true,
+      "traceability_score": 1.0,
+      "decision_coherence": true,
+      "hallucination_indicators": 0
+    }
+  }
+}

@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard &amp; Data Ingestion - Axiom Data Insights</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#515f74",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-primary-container": "#738298",
+                        "secondary-container": "#29a195",
+                        "surface-container-high": "#222a3d",
+                        "error": "#ffb4ab",
+                        "on-tertiary-container": "#b47300",
+                        "primary-fixed-dim": "#b9c7e0",
+                        "surface-container-lowest": "#060e20",
+                        "outline-variant": "#45464d",
+                        "on-secondary-fixed-variant": "#005049",
+                        "primary-container": "#09182a",
+                        "on-secondary-fixed": "#00201d",
+                        "on-secondary": "#003732",
+                        "tertiary-container": "#251400",
+                        "on-error": "#690005",
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-dim": "#0b1326",
+                        "primary-fixed": "#d5e3fd",
+                        "on-background": "#dae2fd",
+                        "secondary-fixed": "#89f5e7",
+                        "surface-container-low": "#131b2e",
+                        "background": "#0b1326",
+                        "surface-bright": "#31394d",
+                        "surface-tint": "#b9c7e0",
+                        "inverse-on-surface": "#283044",
+                        "secondary-fixed-dim": "#6bd8cb",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-surface": "#dae2fd",
+                        "outline": "#909097",
+                        "tertiary": "#ffb95f",
+                        "on-primary": "#233144",
+                        "on-secondary-container": "#00302b",
+                        "surface-container": "#171f33",
+                        "on-primary-fixed": "#0d1c2f",
+                        "inverse-surface": "#dae2fd",
+                        "on-tertiary": "#472a00",
+                        "primary": "#b9c7e0",
+                        "on-primary-fixed-variant": "#3a485c",
+                        "on-surface-variant": "#c6c6cd",
+                        "surface-container-highest": "#2d3449",
+                        "surface": "#0b1326",
+                        "secondary": "#6bd8cb",
+                        "surface-variant": "#2d3449",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col md:flex-row">
+<!-- Simple Sidebar -->
+<div class="hidden md:flex flex-col w-20 bg-surface-container-low h-screen sticky top-0 border-r border-outline-variant/20 items-center py-4">
+<div class="flex flex-col gap-4 items-center">
+<div class="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center text-secondary text-lg font-bold">DA</div>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="flex flex-1 flex-col min-w-0">
+<!-- Simple Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-outline-variant/20 px-6 py-3 bg-surface/80 sticky top-0 z-10">
+<h2 class="text-lg font-bold text-on-surface">Data Analyst</h2>
+</header>
+<!-- Page Content -->
+<div class="flex-1 overflow-y-auto p-6 lg:p-8 space-y-8">
+<!-- Page Header -->
+<div class="flex flex-col gap-2">
+<h1 class="text-[2rem] font-bold leading-tight tracking-[-0.015em] text-on-surface font-headline">Data Analyst Agent</h1>
+<p class="text-on-surface-variant text-sm font-normal leading-normal max-w-2xl">Upload your dataset to begin the automated analysis pipeline. The AI will infer schema, detect signals, generate hypotheses, and produce insights.</p>
+</div>
+<!-- Main Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+<!-- Left Column: Upload & Pipeline -->
+<div class="xl:col-span-1 flex flex-col gap-8">
+<!-- Upload Zone -->
+<div class="bg-surface-container-low rounded-lg p-6 border-2 border-dashed border-outline-variant/30 flex flex-col items-center justify-center text-center gap-3 hover:border-secondary/50 cursor-pointer transition-colors">
+<div class="size-12 rounded-full bg-surface-container-high flex items-center justify-center text-secondary text-2xl">+</div>
+<div>
+<p class="text-on-surface text-sm font-medium">Drop CSV here</p>
+<p class="text-on-surface-variant text-xs">or click to browse</p>
+</div>
+</div>
+
+<!-- Phase Tabs -->
+<div class="bg-surface-container-low rounded-lg flex flex-col">
+<div class="bg-surface-container-high px-3 py-2 rounded-t-lg flex gap-1 overflow-x-auto">
+<button onclick="showTab('pipeline')" id="tab-pipeline" class="tab-btn px-3 py-1.5 text-xs font-medium rounded bg-surface-container-highest text-secondary">Pipeline</button>
+<button onclick="showTab('schema')" id="tab-schema" class="tab-btn px-3 py-1.5 text-xs font-medium rounded text-on-surface-variant hover:bg-surface-container-high">Schema</button>
+<button onclick="showTab('insights')" id="tab-insights" class="tab-btn px-3 py-1.5 text-xs font-medium rounded text-on-surface-variant hover:bg-surface-container-high">Insights</button>
+<button onclick="showTab('plots')" id="tab-plots" class="tab-btn px-3 py-1.5 text-xs font-medium rounded text-on-surface-variant hover:bg-surface-container-high">Plots</button>
+<button onclick="showTab('chat')" id="tab-chat" class="tab-btn px-3 py-1.5 text-xs font-medium rounded text-on-surface-variant hover:bg-surface-container-high">Chat</button>
+</div>
+
+<!-- Tab Content: Pipeline -->
+<div id="content-pipeline" class="tab-content p-3 flex flex-col gap-2">
+<!-- Tab Content: Pipeline -->
+<div id="content-pipeline" class="tab-content p-2 flex flex-col gap-1">
+<div id="phase-0" class="flex items-center justify-between px-2 py-1 rounded bg-surface-container-highest text-xs">
+<span class="text-on-surface">Upload</span>
+<span id="phase-0-msg" class="text-[10px] text-on-surface-variant">-</span>
+</div>
+<div id="phase-1" class="flex items-center justify-between px-2 py-1 rounded text-xs opacity-50">
+<span class="text-on-surface">Schema</span>
+</div>
+<div id="phase-2" class="flex items-center justify-between px-2 py-1 rounded text-xs opacity-50">
+<span class="text-on-surface">Signals</span>
+</div>
+<div id="phase-3" class="flex items-center justify-between px-2 py-1 rounded text-xs opacity-50">
+<span class="text-on-surface">Hypotheses</span>
+</div>
+<div id="phase-4" class="flex items-center justify-between px-2 py-1 rounded text-xs opacity-50">
+<span class="text-on-surface">Execute</span>
+</div>
+<div id="phase-5" class="flex items-center justify-between px-2 py-1 rounded text-xs opacity-50">
+<span class="text-on-surface">Insights</span>
+</div>
+</div>
+
+<!-- Tab Content: Schema (empty initially) -->
+<div id="content-schema" class="tab-content hidden p-4">
+<div id="schema-table" class="text-on-surface-variant text-sm">Upload a CSV to see schema</div>
+</div>
+
+<!-- Tab Content: Insights -->
+<div id="content-insights" class="tab-content hidden p-4 space-y-2 max-h-64 overflow-y-auto">
+<div class="text-on-surface-variant text-sm">Run analysis to see insights</div>
+</div>
+
+<!-- Tab Content: Plots -->
+<div id="content-plots" class="tab-content hidden p-4 grid grid-cols-1 gap-2">
+<div class="text-on-surface-variant text-sm">No plots generated</div>
+</div>
+
+<!-- Tab Content: Chat -->
+<div id="content-chat" class="tab-content hidden p-4">
+<div id="chat-messages" class="space-y-2 max-h-48 overflow-y-auto mb-3">
+<div class="text-on-surface-variant text-sm">Ask questions about your data</div>
+</div>
+<div class="flex gap-2">
+<input id="chat-input" type="text" placeholder="Ask a question..." class="flex-1 bg-surface-container-highest px-3 py-2 rounded text-sm text-on-surface" onkeypress="if(event.key==='Enter')sendChat()"/>
+<button onclick="sendChat()" class="px-3 py-2 rounded bg-secondary text-surface text-sm font-medium">Send</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-on-surface text-base font-semibold font-headline">Upload CSV Data</p>
+<p class="text-on-surface-variant text-xs font-normal">Drag and drop your .csv file here, or click to browse.<br/>Max size 500MB.</p>
+</div>
+<button class="mt-2 flex items-center justify-center h-9 px-4 rounded bg-gradient-to-br from-primary to-primary-container text-on-primary text-sm font-bold shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]">
+                                    Browse Files
+                                </button>
+</div>
+<!-- Pipeline Progress -->
+<div class="bg-surface-container-low rounded-lg flex flex-col">
+<div class="bg-surface-container-high px-5 py-4 rounded-t-lg">
+<h3 class="text-on-surface font-semibold text-sm font-headline">Pipeline Progress</h3>
+</div>
+<div class="p-5 flex flex-col gap-6">
+<!-- Step 0: Upload -->
+<div id="phase-0" class="flex gap-4 relative">
+<div class="absolute left-[11px] top-7 bottom-[-24px] w-[2px] bg-outline-variant/30"></div>
+<div class="size-6 rounded-full bg-surface-container-highest border border-outline flex items-center justify-center z-10 shrink-0">
+<span class="text-outline text-[10px] font-bold">0</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-on-surface text-sm font-medium">Phase 0: Data Upload</p>
+<p id="phase-0-msg" class="text-on-surface-variant text-xs">Waiting for CSV upload...</p>
+</div>
+</div>
+<!-- Step 1: Schema -->
+<div id="phase-1" class="flex gap-4 relative">
+<div class="absolute left-[11px] top-7 bottom-[-24px] w-[2px] bg-outline-variant/30"></div>
+<div class="size-6 rounded-full bg-surface-container-highest border border-outline flex items-center justify-center z-10 shrink-0">
+<span class="text-outline text-[10px] font-bold">1</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-on-surface text-sm font-medium">Phase 1: Schema &amp; Quality</p>
+<p id="phase-1-msg" class="text-on-surface-variant text-xs">Pending upload.</p>
+</div>
+</div>
+<!-- Step 2: Signal Detection -->
+<div id="phase-2" class="flex gap-4 relative">
+<div class="absolute left-[11px] top-7 bottom-[-24px] w-[2px] bg-outline-variant/30"></div>
+<div class="size-6 rounded-full bg-surface-container-highest border border-outline flex items-center justify-center z-10 shrink-0">
+<span class="text-outline text-[10px] font-bold">2</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-on-surface text-sm font-medium">Phase 2: Signal Detection</p>
+<p id="phase-2-msg" class="text-on-surface-variant text-xs">Pending schema completion.</p>
+</div>
+</div>
+<!-- Step 3: Hypothesis Generation -->
+<div id="phase-3" class="flex gap-4 relative">
+<div class="absolute left-[11px] top-7 bottom-[-24px] w-[2px] bg-outline-variant/30"></div>
+<div class="size-6 rounded-full bg-surface-container-highest border border-outline flex items-center justify-center z-10 shrink-0">
+<span class="text-outline text-[10px] font-bold">3</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-on-surface text-sm font-medium">Phase 3: Hypotheses</p>
+<p id="phase-3-msg" class="text-on-surface-variant text-xs">Pending signals.</p>
+</div>
+</div>
+<!-- Step 4: Execution -->
+<div id="phase-4" class="flex gap-4 relative">
+<div class="absolute left-[11px] top-7 bottom-[-24px] w-[2px] bg-outline-variant/30"></div>
+<div class="size-6 rounded-full bg-surface-container-highest border border-outline flex items-center justify-center z-10 shrink-0">
+<span class="text-outline text-[10px] font-bold">4</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-on-surface text-sm font-medium">Phase 4: Execution</p>
+<p id="phase-4-msg" class="text-on-surface-variant text-xs">Pending hypotheses.</p>
+</div>
+</div>
+<!-- Step 5: Insights -->
+<div id="phase-5" class="flex gap-4 relative">
+<div class="size-6 rounded-full bg-surface-container-highest border border-outline flex items-center justify-center z-10 shrink-0">
+<span class="text-outline text-[10px] font-bold">5</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-on-surface text-sm font-medium">Phase 5: Insights</p>
+<p id="phase-5-msg" class="text-on-surface-variant text-xs">Pending execution.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Data Overview -->
+<div class="xl:col-span-2 flex flex-col gap-8">
+<!-- Overview Stats Grid -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-surface-container-low p-4 rounded-lg flex flex-col gap-2">
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-wider font-label">Total Rows</p>
+<p id="stat-rows" class="text-on-surface text-2xl font-bold font-headline">-</p>
+<p id="stat-rows-status" class="text-[10px] text-on-surface-variant flex items-center gap-1 font-label uppercase">
+<span class="material-symbols-outlined text-[12px]">hourglass_empty</span> Waiting
+</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg flex flex-col gap-2">
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-wider font-label">Columns</p>
+<p id="stat-columns" class="text-on-surface text-2xl font-bold font-headline">-</p>
+<p id="stat-cols-status" class="text-[10px] text-on-surface-variant flex items-center gap-1 font-label uppercase">
+<span class="material-symbols-outlined text-[12px]">hourglass_empty</span> Waiting
+</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg flex flex-col gap-2">
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-wider font-label">Signals</p>
+<p id="stat-signals" class="text-on-surface text-2xl font-bold font-headline">-</p>
+<p id="stat-signals-status" class="text-[10px] text-on-surface-variant flex items-center gap-1 font-label uppercase">
+<span class="material-symbols-outlined text-[12px]">hourglass_empty</span> Waiting
+</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg flex flex-col gap-2">
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-wider font-label">Hypotheses</p>
+<p id="stat-hypotheses" class="text-on-surface text-2xl font-bold font-headline">-</p>
+<p id="stat-hyp-status" class="text-[10px] text-on-surface-variant flex items-center gap-1 font-label uppercase">
+<span class="material-symbols-outlined text-[12px]">hourglass_empty</span> Waiting
+</p>
+</div>
+</div>
+
+<!-- Schema Panel -->
+<div class="bg-surface-container-low rounded-lg flex flex-col overflow-hidden">
+<div class="bg-surface-container-high px-5 py-4 flex justify-between items-center">
+<h3 class="text-on-surface font-semibold text-sm font-headline">Detected Schema</h3>
+</div>
+<div class="overflow-x-auto max-h-64">
+<table class="w-full text-left text-sm text-on-surface-variant">
+<thead class="bg-surface-container-lowest/50 text-xs uppercase font-label sticky top-0">
+<tr>
+<th class="px-4 py-2 border-b border-outline-variant/10 font-bold">Column</th>
+<th class="px-4 py-2 border-b border-outline-variant/10 font-bold">Type</th>
+<th class="px-4 py-2 border-b border-outline-variant/10 font-bold">Null %</th>
+</tr>
+</thead>
+<tbody id="schema-tbody" class="divide-y divide-outline-variant/10">
+<tr>
+<td colspan="3" class="px-4 py-4 text-center text-on-surface-variant">Upload a CSV to see schema</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- Stats Row -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-surface-container-low p-4 rounded-lg flex flex-col gap-2">
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-wider font-label">Total Rows</p>
+<p id="stat-rows" class="text-on-surface text-2xl font-bold font-headline">-</p>
+<p id="stat-rows-status" class="text-[10px] text-on-surface-variant flex items-center gap-1 font-label uppercase">
+<span class="material-symbols-outlined text-[12px]">hourglass_empty</span> Waiting
+</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg flex flex-col gap-2">
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-wider font-label">Columns</p>
+<p id="stat-columns" class="text-on-surface text-2xl font-bold font-headline">-</p>
+<p id="stat-cols-status" class="text-[10px] text-on-surface-variant flex items-center gap-1 font-label uppercase">
+<span class="material-symbols-outlined text-[12px]">hourglass_empty</span> Waiting
+</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg flex flex-col gap-2">
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-wider font-label">Signals</p>
+<p id="stat-signals" class="text-on-surface text-2xl font-bold font-headline">-</p>
+<p id="stat-signals-status" class="text-[10px] text-on-surface-variant flex items-center gap-1 font-label uppercase">
+<span class="material-symbols-outlined text-[12px]">hourglass_empty</span> Waiting
+</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg flex flex-col gap-2">
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-wider font-label">Data Health</p>
+<p id="stat-health" class="text-on-surface text-2xl font-bold font-headline">-</p>
+<p id="stat-health-status" class="text-[10px] text-on-surface-variant flex items-center gap-1 font-label uppercase">
+<span class="material-symbols-outlined text-[12px]">hourglass_empty</span> Waiting
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<input type="file" id="fileInput" accept=".csv" class="hidden"/>
+
+<script>
+const API_BASE = window.location.origin;
+
+// State
+let sessionId = null;
+let currentPhase = 0;
+
+// Elements
+const fileInput = document.getElementById('fileInput');
+const uploadZone = document.querySelector('.bg-surface-container-low.rounded-lg.p-6');
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    uploadZone.addEventListener('click', () => fileInput.click());
+    uploadZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadZone.classList.add('border-primary/50');
+    });
+    uploadZone.addEventListener('dragleave', () => {
+        uploadZone.classList.remove('border-primary/50');
+    });
+    uploadZone.addEventListener('drop', handleDrop);
+    fileInput.addEventListener('change', handleFileSelect);
+});
+
+function handleDrop(e) {
+    e.preventDefault();
+    uploadZone.classList.remove('border-primary/50');
+    const files = e.dataTransfer.files;
+    if (files.length > 0 && files[0].name.endsWith('.csv')) {
+        uploadFile(files[0]);
+    }
+}
+
+function handleFileSelect(e) {
+    const file = e.target.files[0];
+    if (file) uploadFile(file);
+}
+
+async function uploadFile(file) {
+    updateUploadStatus('uploading', `Uploading ${file.name}...`);
+    
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    try {
+        const response = await fetch(`${API_BASE}/upload_csv`, {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!response.ok) throw new Error('Upload failed');
+        
+        const data = await response.json();
+        sessionId = data.session_id;
+        
+        // Update session display
+        const sessionDisplay = document.getElementById('session-display');
+        if (sessionDisplay) {
+            sessionDisplay.textContent = sessionId.slice(0, 8) + '...';
+        }
+        
+        updateUploadStatus('uploaded', `${file.name} uploaded successfully. (${formatBytes(data.file_size)})`);
+        updatePhaseStatus(0, 'complete', `${file.name} uploaded successfully. (${formatBytes(data.file_size)})`);
+        
+        // Load schema and quality data
+        loadSessionData();
+        
+    } catch (error) {
+        console.error('Upload error:', error);
+        updateUploadStatus('error', 'Upload failed: ' + error.message);
+    }
+}
+
+async function loadSessionData() {
+    if (!sessionId) return;
+    
+    updatePhaseStatus(1, 'processing', 'Loading schema...');
+    
+    try {
+        // Fetch schema
+        const schemaRes = await fetch(`${API_BASE}/schema/${sessionId}`);
+        const schema = await schemaRes.json();
+        
+        // Fetch data quality
+        const qualityRes = await fetch(`${API_BASE}/data_quality/${sessionId}`);
+        const quality = await qualityRes.json();
+        
+        updatePhaseStatus(1, 'complete', `Schema validated. ${schema.columns.length} columns, ${quality.total_rows.toLocaleString()} rows detected.`);
+        
+        // Update stats - signal count will be updated in pipeline
+        updateStats(quality, 0);
+        
+        // Update schema table
+        updateSchemaTable(schema, quality);
+        
+        // Show schema tab
+        showTab('schema');
+        
+        // Start analysis pipeline
+        runAnalysisPipeline();
+        
+    } catch (error) {
+        console.error('Load error:', error);
+        updatePhaseStatus(1, 'error', 'Failed to load data');
+    }
+}
+
+async function runAnalysisPipeline() {
+    if (!sessionId) return;
+    
+    // Phase 2: Explore/Signals
+    updatePhaseStatus(2, 'processing', 'Running signal detection...');
+    try {
+        const exploreRes = await fetch(`${API_BASE}/explore`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({session_id: sessionId})
+        });
+        const exploreData = await exploreRes.json();
+        
+        updatePhaseStatus(2, 'complete', `Found ${exploreData.signal_count} signals detected.`);
+        
+        // Update signal count in stats
+        document.getElementById('stat-signals').textContent = exploreData.signal_count || '0';
+        document.getElementById('stat-signals-status').innerHTML = '<span class="material-symbols-outlined text-[12px]">check_circle</span> Detected';
+        document.getElementById('stat-signals-status').className = 'text-[10px] text-secondary flex items-center gap-1 font-label uppercase';
+        
+        // Phase 3: Hypotheses
+        updatePhaseStatus(3, 'processing', 'Generating hypotheses...');
+        const hypRes = await fetch(`${API_BASE}/hypotheses`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({session_id: sessionId})
+        });
+        const hypData = await hypRes.json();
+        
+        updatePhaseStatus(3, 'complete', `Generated ${hypData.node_count} hypotheses.`);
+        
+        // Update hypotheses stat
+        document.getElementById('stat-hypotheses').textContent = hypData.node_count || '0';
+        document.getElementById('stat-hyp-status').innerHTML = '<span class="material-symbols-outlined text-[12px]">check_circle</span> Generated';
+        document.getElementById('stat-hyp-status').className = 'text-[10px] text-secondary flex items-center gap-1 font-label uppercase';
+        
+        // Phase 4: Execute
+        updatePhaseStatus(4, 'processing', 'Testing hypotheses...');
+        const execRes = await fetch(`${API_BASE}/execute`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({session_id: sessionId})
+        });
+        const execData = await execRes.json();
+        
+        updatePhaseStatus(4, 'complete', `Execution complete: ${execData.accepted_hypotheses.length} accepted, ${execData.rejected_hypotheses.length} rejected.`);
+        
+        // Phase 5: Insights
+        updatePhaseStatus(5, 'processing', 'Generating insights and plots...');
+        const phase4Res = await fetch(`${API_BASE}/phase4/run`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({session_id: sessionId})
+        });
+        const phase4Data = await phase4Res.json();
+        
+        updatePhaseStatus(5, 'complete', `Generated ${phase4Data.insight_count} insights and ${phase4Data.plot_count} plots.`);
+        
+        // Show visualizations and insights panels
+        displayPlots(phase4Data.plots || []);
+        displayInsights(phase4Data.insights || []);
+        
+        // Switch to insights tab
+        showTab('insights');
+        
+    } catch (error) {
+        console.error('Pipeline error:', error);
+    }
+}
+
+function updateUploadStatus(status, message) {
+    const statusEl = uploadZone.querySelector('.text-on-surface-variant.text-xs');
+    if (statusEl) {
+        statusEl.textContent = message;
+    }
+}
+
+function updatePhaseStatus(phase, status, message) {
+    currentPhase = phase;
+    
+    const phaseEl = document.getElementById(`phase-${phase}`);
+    if (!phaseEl) return;
+    
+    const phaseContainer = phaseEl;
+    const msgEl = phaseContainer.querySelector('.text-xs') || phaseContainer.querySelector('p');
+    
+    if (status === 'complete') {
+        phaseContainer.className = 'flex gap-3 items-center p-2 rounded bg-surface-container-highest';
+        phaseContainer.querySelector('span').className = 'size-5 rounded-full bg-secondary text-surface text-xs flex items-center justify-center font-bold';
+        phaseContainer.querySelector('span').textContent = '✓';
+    } else if (status === 'processing') {
+        phaseContainer.className = 'flex gap-3 items-center p-2 rounded bg-surface-container-highest border border-tertiary';
+        phaseContainer.querySelector('span').innerHTML = '<span class="size-2 rounded-full bg-tertiary animate-pulse"></span>';
+    }
+    
+    if (msgEl) {
+        msgEl.textContent = message;
+    }
+}
+
+function updateStats(quality, signalCount = 0) {
+    document.getElementById('stat-rows').textContent = quality.total_rows.toLocaleString();
+    document.getElementById('stat-columns').textContent = (quality.missingness ? Object.keys(quality.missingness).length : 0) || '0';
+    document.getElementById('stat-signals').textContent = signalCount || '0';
+}
+
+function updateSchemaTable(schema, quality) {
+    const schemaDiv = document.getElementById('schema-table');
+    if (!schemaDiv) return;
+    
+    const missingness = quality.missingness || {};
+    const totalRows = quality.total_rows;
+    
+    let html = '<table class="w-full text-xs"><thead><tr><th class="px-2 py-1 text-left">Column</th><th class="px-2 py-1 text-left">Type</th><th class="px-2 py-1 text-left">Null %</th></tr></thead><tbody>';
+    
+    schema.columns.forEach((col) => {
+        const type = schema.inferred_types[col] || 'unknown';
+        const missing = missingness[col] || 0;
+        const missingPct = totalRows > 0 ? ((missing / totalRows) * 100).toFixed(1) : 0;
+        html += `<tr><td class="px-2 py-1 text-on-surface">${col}</td><td class="px-2 py-1 text-secondary">${type}</td><td class="px-2 py-1 ${missingPct > 0 ? 'text-error' : 'text-secondary'}">${missingPct}%</td></tr>`;
+    });
+    
+    html += '</tbody></table>';
+    schemaDiv.innerHTML = html;
+    
+    const missingness = quality.missingness || {};
+    const totalRows = quality.total_rows;
+    
+    schema.columns.forEach((col, idx) => {
+        const type = schema.inferred_types[col] || 'unknown';
+        const missing = missingness[col] || 0;
+        const missingPct = totalRows > 0 ? ((missing / totalRows) * 100).toFixed(1) : 0;
+        
+        const typeIcons = {
+            'int': '123',
+            'bigint': '123',
+            'float': '123',
+            'double': '123',
+            'string': 'tag',
+            'varchar': 'tag',
+            'datetime': 'calendar_today',
+            'date': 'calendar_today',
+            'timestamp': 'schedule'
+        };
+        
+        const typeNames = {
+            'int': 'Numeric (Int)',
+            'bigint': 'Numeric (BigInt)',
+            'float': 'Numeric (Float)',
+            'double': 'Numeric (Double)',
+            'string': 'String',
+            'varchar': 'String',
+            'datetime': 'Datetime',
+            'date': 'Date',
+            'timestamp': 'Timestamp'
+        };
+        
+        const icon = typeIcons[type] || 'tag';
+        const typeName = typeNames[type] || type;
+        
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-surface-container-highest/30 transition-colors';
+        tr.innerHTML = `
+            <td class="px-5 py-3 font-medium text-on-surface">${col}</td>
+            <td class="px-5 py-3">
+                <span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface-container-highest text-[10px] font-bold text-secondary uppercase tracking-wider">
+                    <span class="material-symbols-outlined text-[12px]">${icon}</span> ${typeName}
+                </span>
+            </td>
+            <td class="px-5 py-3 ${missingPct > 0 ? 'text-error' : 'text-secondary'}">${missingPct}%</td>
+            <td class="px-5 py-3 font-mono text-xs">-</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function formatBytes(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+// Tab switching
+function showTab(tabName) {
+    // Hide all tab contents
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.tab-btn').forEach(el => {
+        el.classList.remove('bg-surface-container-highest', 'text-secondary');
+        el.classList.add('text-on-surface-variant');
+    });
+    
+    // Show selected tab
+    document.getElementById(`content-${tabName}`).classList.remove('hidden');
+    document.getElementById(`tab-${tabName}`).classList.add('bg-surface-container-highest', 'text-secondary');
+    document.getElementById(`tab-${tabName}`).classList.remove('text-on-surface-variant');
+}
+
+// Chat function
+async function sendChat() {
+    const input = document.getElementById('chat-input');
+    const msg = input.value.trim();
+    if (!msg || !sessionId) return;
+    
+    const messages = document.getElementById('chat-messages');
+    messages.innerHTML += `<div class="text-on-surface text-sm font-medium">You: ${msg}</div>`;
+    input.value = '';
+    
+    try {
+        const res = await fetch(`${API_BASE}/chat`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({session_id: sessionId, question: msg})
+        });
+        const data = await res.json();
+        messages.innerHTML += `<div class="text-on-surface-variant text-sm">${data.answer || 'No response'}</div>`;
+        messages.scrollTop = messages.scrollHeight;
+    } catch (e) {
+        messages.innerHTML += `<div class="text-error text-sm">Error: ${e.message}</div>`;
+    }
+}
+
+function displayPlots(plots) {
+    const plotsContainer = document.getElementById('content-plots');
+    if (!plotsContainer) return;
+    
+    if (!plots || plots.length === 0) {
+        plotsContainer.innerHTML = '<div class="text-on-surface-variant text-sm">No plots generated</div>';
+        return;
+    }
+    
+    plotsContainer.innerHTML = '';
+    plots.forEach((plot, idx) => {
+        const div = document.createElement('div');
+        div.className = 'bg-surface-container-high rounded-lg p-2';
+        
+        if (plot.format === 'base64_png' && plot.data) {
+            div.innerHTML = `
+                <p class="text-on-surface text-xs font-medium mb-1">${plot.title || 'Plot ' + (idx + 1)}</p>
+                <img src="data:image/png;base64,${plot.data}" alt="Plot" class="w-full rounded"/>
+            `;
+        }
+        plotsContainer.appendChild(div);
+    });
+}
+
+function displayInsights(insights) {
+    const insightsContainer = document.getElementById('content-insights');
+    if (!insightsContainer) return;
+    
+    if (!insights || insights.length === 0) {
+        insightsContainer.innerHTML = '<div class="text-on-surface-variant text-sm">No insights generated</div>';
+        return;
+    }
+    
+    insightsContainer.innerHTML = '';
+    insights.forEach((insight, idx) => {
+        const div = document.createElement('div');
+        div.className = 'bg-surface-container-high rounded-lg p-2 flex flex-col gap-1';
+        
+        const confidence = (insight.confidence || 0) * 100;
+        const confColor = confidence >= 75 ? 'text-secondary' : confidence >= 50 ? 'text-tertiary' : 'text-error';
+        
+        div.innerHTML = `
+            <p class="text-on-surface text-xs">${insight.insight || insight.claim || 'No description'}</p>
+            <span class="text-xs ${confColor}">${confidence.toFixed(0)}% confidence</span>
+        `;
+        
+        insightsContainer.appendChild(div);
+    });
+}
+</script>
+
+</body></html>

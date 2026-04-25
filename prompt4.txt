@@ -1,0 +1,360 @@
+🧠 CODING AGENT PROMPT — PHASE 4 (REDESIGNED FULL SYSTEM)
+🎯 ROLE
+
+You are a senior AI systems engineer implementing:
+
+Phase 4: Insight + Chat + Plot Intelligence System (PIS)
+
+This is the final production layer of an agentic analytics system.
+
+You are NOT building a chatbot.
+
+You are building a:
+
+Evidence-driven AI Business Intelligence rendering engine
+
+🚨 NON-NEGOTIABLE CONSTRAINTS
+
+You MUST strictly enforce:
+
+1. Grounding constraint
+
+All outputs MUST come from:
+
+Phase 3 accepted hypotheses only
+execution_history
+computed statistical evidence
+
+❌ No new reasoning allowed
+❌ No new hypothesis generation
+❌ No raw LLM inference as truth source
+
+2. Plot constraint
+No plot without hypothesis linkage
+No exploratory plotting
+No ID columns plotted
+No raw unvalidated dataset visualization
+3. Chat constraint
+
+Chat MUST:
+
+retrieve insights only
+retrieve plots only
+NOT generate new causal claims
+4. Evidence constraint
+
+Every output MUST map to:
+
+hypothesis_id
+confidence score
+evidence trace
+🧠 INPUTS
+
+You will receive:
+
+accepted_hypotheses: list
+execution_history: list
+scores: dict
+signals: optional metadata
+dataset_schema: metadata only (NOT raw reasoning input)
+🧱 SYSTEM ARCHITECTURE (MUST IMPLEMENT EXACTLY)
+Phase 4 Pipeline
+Phase 3 Output
+   ↓
+Evidence Aggregation
+   ↓
+Insight Construction
+   ↓
+Contradiction Resolution
+   ↓
+Insight Ranking
+   ↓
+PLOT INTELLIGENCE SYSTEM (PIS)
+   ↓
+Chat Interface Layer
+   ↓
+Final Response
+🧠 MODULE IMPLEMENTATION REQUIREMENTS
+1. Evidence Aggregation Module
+Purpose
+
+Convert Phase 3 outputs into structured evidence objects.
+
+Output format:
+{
+  "hypothesis_id": "H1",
+  "claim": "Mobile latency reduces conversion",
+  "stat_tests": [
+    {
+      "type": "t_test",
+      "p_value": 0.01,
+      "effect_size": 0.62
+    }
+  ],
+  "confidence": 0.78
+}
+2. Insight Construction Module
+Purpose
+
+Convert evidence → grounded natural language
+
+STRICT RULES:
+No new claims
+Must reference evidence
+Must include confidence
+Output:
+{
+  "insight": "Mobile latency significantly reduces conversion rate, supported by statistical testing (p < 0.01, effect size 0.62).",
+  "confidence": 0.78,
+  "hypothesis_id": "H1"
+}
+3. Contradiction Resolution Module
+Purpose
+
+Resolve competing hypotheses
+
+Logic:
+compare confidence
+compare effect size
+compare evidence strength
+Output:
+{
+  "winner": "H1",
+  "rejected": ["H2"],
+  "reason": "stronger statistical evidence and higher effect size"
+}
+4. Insight Ranking Engine
+
+Rank insights by:
+
+confidence
+effect size
+stability across segments
+consistency in execution history
+5. 🧠 PLOT INTELLIGENCE SYSTEM (CORE REQUIREMENT)
+
+This is NOT optional.
+
+You MUST implement all submodules below.
+
+5.1 Plot Relevance Detector
+if hypothesis_type in [
+  "trend",
+  "segment",
+  "anomaly",
+  "distribution_shift"
+]:
+    plot_required = True
+else:
+    plot_required = False
+5.2 Plot Type Selector
+
+Must map:
+
+Pattern	Plot
+trend	line
+segment	bar
+distribution_shift	histogram / KDE
+anomaly	boxplot
+correlation	scatter
+segmentation	grouped bar
+5.3 Plot Composition Engine
+
+MUST define:
+
+x-axis
+y-axis
+grouping
+filters
+aggregation strategy
+
+Example:
+
+{
+  "x": "date",
+  "y": "revenue",
+  "group_by": "device",
+  "filter": "device = mobile",
+  "aggregation": "mean"
+}
+5.4 Multi-Plot Planner (CRITICAL)
+
+Each hypothesis MUST generate multiple plots if needed.
+
+Example:
+
+[
+  {
+    "type": "time_series",
+    "focus": "overall trend"
+  },
+  {
+    "type": "segment_comparison",
+    "focus": "mobile vs desktop"
+  },
+  {
+    "type": "distribution_shift",
+    "focus": "latency change"
+  }
+]
+5.5 Plot Validator (MANDATORY SAFETY GATE)
+
+Reject plots if:
+
+ID columns used
+constant columns used
+insufficient data points
+meaningless aggregations
+5.6 Plot Renderer
+
+Output format:
+
+{
+  "plot_id": "p_123",
+  "type": "line",
+  "title": "Revenue Drop After Latency Spike",
+  "data": "...",
+  "linked_hypothesis": "H1",
+  "insight_anchor": true
+}
+6. Chat Interface Layer
+Purpose
+
+Answer user queries using ONLY:
+
+ranked insights
+generated plots
+Chat Flow
+user query
+   ↓
+intent parser
+   ↓
+retrieve insights
+   ↓
+retrieve plots
+   ↓
+compose grounded response
+Output format:
+{
+  "answer": "Revenue drop is explained by increased mobile latency, supported by statistically significant evidence.",
+  "confidence": 0.78,
+  "insights": ["H1"],
+  "plots": ["p_123", "p_124", "p_125"]
+}
+📡 API ENDPOINTS
+
+You MUST implement:
+
+Run full Phase 4 pipeline
+POST /phase4/run
+Get insights
+GET /phase4/insights/{session_id}
+Get plots
+GET /phase4/plots/{session_id}
+Chat endpoint
+POST /chat
+📄 README.md (MUST UPDATE)
+Phase 4: Insight + Chat + Plot Intelligence System
+Overview
+
+Phase 4 is the final layer of the AI analytics system.
+
+It converts validated hypotheses into:
+
+insights
+plots
+chat responses
+Core Principle
+
+Phase 4 does NOT perform reasoning.
+
+It only:
+
+aggregates evidence
+formats insights
+generates plots from validated hypotheses
+retrieves grounded responses for chat
+Why Plot Intelligence System exists
+
+Most AI systems fail by:
+
+showing text-only explanations
+ignoring visual validation
+generating plots without grounding
+
+This system ensures:
+
+Every insight must be visually verifiable
+
+Plot Intelligence System
+
+The system automatically decides:
+
+IF a plot is needed
+WHAT type of plot
+HOW many plots per hypothesis
+HOW plots support evidence
+
+Plots are:
+
+first-class evidence artifacts, not visual decorations
+
+System Output Types
+1. Insight Object
+
+Structured explanation tied to hypothesis
+
+2. Plot Object
+
+Evidence visualization tied to hypothesis
+
+3. Chat Answer
+
+Grounded retrieval-based response
+
+Trust Guarantee
+
+Every output is:
+
+hypothesis-linked
+evidence-backed
+confidence-scored
+reproducible
+📦 requirements.txt (UPDATE)
+fastapi
+pydantic
+numpy
+pandas
+scikit-learn
+scipy
+matplotlib
+seaborn
+plotly
+duckdb
+🔐 .env.example
+MIN_CONFIDENCE_TO_REPORT=0.6
+HIGH_CONFIDENCE_THRESHOLD=0.75
+
+ENABLE_PLOT_GENERATION=true
+MAX_PLOTS_PER_HYPOTHESIS=3
+
+ALLOW_CHAT_ONLY_FROM_INSIGHTS=true
+
+ENABLE_MULTI_PLOT_MODE=true
+
+FORBID_UNLINKED_PLOTS=true
+🧠 FINAL WARNING TO CODING AGENT
+
+If you skip any of the following, system is INVALID:
+
+❌ Plot Intelligence System
+❌ Multi-plot planning
+❌ Plot validation
+❌ Evidence grounding
+❌ Chat retrieval constraints
+
+🧠 FINAL SYSTEM GOAL
+
+You are building:
+
+“A scientific AI analyst system that thinks in hypotheses, proves with data, and explains with text + visuals.”
