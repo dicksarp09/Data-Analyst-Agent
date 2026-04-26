@@ -1,0 +1,98 @@
+{
+  "session_id": "54092905-36c2-4270-8633-4780252fa830",
+  "signal_count": 5,
+  "signals": [
+    {
+      "type": "correlation",
+      "pair": [
+        "sales",
+        "profit"
+      ],
+      "strength": 0.945,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between sales and profit (r=0.945). These variables move together."
+    },
+    {
+      "type": "trend_break",
+      "feature": "sales",
+      "timestamp": "47",
+      "change_magnitude": 48887.2,
+      "method": "rolling_change",
+      "confidence": 0.7,
+      "strength": 1.0,
+      "context": "sales shows a significant change around position 47 with magnitude 48887.20. This represents a structural break in the trend."
+    },
+    {
+      "type": "trend_break",
+      "feature": "profit",
+      "timestamp": "44",
+      "change_magnitude": 8839.43,
+      "method": "rolling_change",
+      "confidence": 0.7,
+      "strength": 1.0,
+      "context": "profit shows a significant change around position 44 with magnitude 8839.43. This represents a structural break in the trend."
+    },
+    {
+      "type": "distribution_shift",
+      "feature": "sales",
+      "shift_score": 0.458,
+      "p_value": 0.012,
+      "method": "ks_test",
+      "early_mean": 205708.5,
+      "late_mean": 321079.21,
+      "confidence": 0.988,
+      "strength": 0.458,
+      "context": "sales distribution changed significantly over time. Early period mean: 205708.5, late period mean: 321079.2. This indicates a temporal shift."
+    },
+    {
+      "type": "distribution_shift",
+      "feature": "profit",
+      "shift_score": 0.458,
+      "p_value": 0.012,
+      "method": "ks_test",
+      "early_mean": 23181.5,
+      "late_mean": 37962.55,
+      "confidence": 0.988,
+      "strength": 0.458,
+      "context": "profit distribution changed significantly over time. Early period mean: 23181.5, late period mean: 37962.6. This indicates a temporal shift."
+    }
+  ],
+  "data_summary": {
+    "total_rows": 48,
+    "total_columns": 3,
+    "numeric_columns": 2,
+    "categorical_columns": 1,
+    "date_columns": 0,
+    "column_list": [
+      "order_date",
+      "sales",
+      "profit"
+    ],
+    "numeric_list": [
+      "sales",
+      "profit"
+    ],
+    "categorical_list": [
+      "order_date"
+    ],
+    "date_list": [],
+    "missingness": {
+      "order_date": 0.0,
+      "sales": 0.0,
+      "profit": 0.0
+    },
+    "outliers": {},
+    "total_rows_raw": 48,
+    "valid_rows": 48,
+    "quarantined_rows": 0
+  },
+  "signal_insights": [
+    "Correlation: sales and profit have r=0.945 correlation",
+    "Trend break: sales changed at position 47",
+    "Trend break: profit changed at position 44",
+    "Distribution shift: sales changed over time",
+    "Distribution shift: profit changed over time"
+  ]
+}

@@ -61,9 +61,10 @@ class QueryPlanner:
         if len(features) >= 2:
             x_col = features[0]
             y_col = features[1]
+            # Use group-level averages for simple causal inference check
             return {
-                "sql": f"SELECT {x_col}, {y_col}, COUNT(*) as cnt FROM clean_dataset GROUP BY {x_col}, {y_col}",
-                "test_type": "correlation",
+                "sql": f"SELECT {x_col} as x_val, AVG({y_col}) as avg_y, COUNT(*) as cnt FROM clean_dataset GROUP BY {x_col}",
+                "test_type": "causal_inference",
                 "test_columns": [x_col, y_col]
             }
         return self._plan_generic(features, schema)
@@ -155,6 +156,8 @@ class EvidenceEvaluator:
 
         if query_type == "correlation":
             return self._eval_correlation(query_result, test_cols)
+        elif query_type == "causal_inference":
+            return self._eval_causal_inference(query_result, test_cols)
         elif query_type == "segment_comparison":
             return self._eval_segment(query_result, test_cols)
         elif query_type == "trend":
@@ -356,6 +359,59 @@ class EvidenceEvaluator:
             "decision": "refine" if support < 0.5 else "accept"
         }
 
+    def _eval_causal_inference(self, result: list[dict], cols: list) -> dict:
+        # Expect rows like: { 'x_val': ..., 'avg_y': ..., 'cnt': ... }
+        if len(result) < 2:
+            return {"confidence": 0.3, "effect_size": 0.2, "support": 0.2, "decision": "reject"}
+
+        try:
+            import numpy as np
+            groups = []
+            avgs = []
+            counts = []
+            for r in result:
+                avg = r.get('avg_y')
+                cnt = r.get('cnt', 0)
+                if avg is None:
+                    continue
+                try:
+                    avgs.append(float(avg))
+                    counts.append(int(cnt))
+                except (ValueError, TypeError):
+                    continue
+
+            if len(avgs) < 2:
+                return {"confidence": 0.3, "effect_size": 0.2, "support": 0.2, "decision": "reject"}
+
+            # Simple effect: difference between max and min group averages
+            effect = float(max(avgs) - min(avgs))
+            support = min(1.0, sum(counts) / 100.0)
+
+            # Normalize effect into 0..1 by dividing by (max avg) if possible
+            denom = max(avgs) if max(avgs) != 0 else 1.0
+            norm_effect = min(1.0, effect / denom)
+
+            if norm_effect >= 0.5 and support > 0.3:
+                confidence = 0.85
+                decision = "accept"
+            elif norm_effect >= 0.2:
+                confidence = 0.6
+                decision = "refine"
+            else:
+                confidence = 0.3
+                decision = "reject"
+
+            return {
+                "confidence": confidence,
+                "effect_size": norm_effect,
+                "support": support,
+                "decision": decision,
+                "raw_effect": effect,
+                "group_count": len(avgs)
+            }
+        except ImportError:
+            return {"confidence": 0.4, "effect_size": 0.3, "support": 0.3, "decision": "refine"}
+
 
 class DecisionEngine:
     def __init__(self):
@@ -538,11 +594,37 @@ class ExecutionEngine:
         elif action == "reject":
             state["rejected_hypotheses"] = state["rejected_hypotheses"] + [hypothesis]
 
+        # Include provenance: plan SQL and a small sample of results
+        plan_sql = None
+        try:
+            plan_sql = state.get("current_plan", {}).get("sql")
+        except Exception:
+            plan_sql = None
+
+        sample = []
+        try:
+            sample = state.get("results", [])[:5]
+        except Exception:
+            sample = []
+
+        # Determine whether this action should be flagged for human review
+        requires_approval = False
+        try:
+            conf = evidence.get("confidence", 0.0)
+            # If accepted but confidence is close to threshold, require human approval
+            if action == "accept" and conf < (self.decision.accept_threshold + 0.05):
+                requires_approval = True
+        except Exception:
+            requires_approval = False
+
         state["execution_history"] = state["execution_history"] + [{
             "hypothesis_id": hypothesis,
             "action": action,
             "evidence": evidence,
-            "iteration": state["iteration"]
+            "iteration": state["iteration"],
+            "plan_sql": plan_sql,
+            "sample_rows": sample
+            ,"requires_approval": requires_approval
         }]
 
         if action == "refine":
@@ -632,6 +714,7 @@ class ExecutionEngine:
             "insights": state["insights"],
             "iteration": state["iteration"],
             "status": state["status"],
+            "approval_required": any([h.get("requires_approval") for h in state.get("execution_history", [])]),
             "execution_log": self.execution_log
         }
 

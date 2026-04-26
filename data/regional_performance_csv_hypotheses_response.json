@@ -1,0 +1,232 @@
+{
+  "session_id": "d5599a14-21f5-4520-90bd-cbe42d79b447",
+  "node_count": 8,
+  "edge_count": 4,
+  "execution_order": [
+    "H_temporal_enforced",
+    "H_segment_enforced",
+    "H_dq_outlier",
+    "H_dq_missing",
+    "H_anom_sales",
+    "H_anom_profit",
+    "H_anom_margin__",
+    "H_corr_sales_profit"
+  ],
+  "nodes": [
+    {
+      "id": "H_corr_sales_profit",
+      "type": "causal",
+      "description": "sales influences profit with strength 0.858",
+      "source_signals": [
+        "correlation_sales_profit"
+      ],
+      "features": [
+        "sales",
+        "profit"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "sales increases when profit increases",
+        "relationship holds across all segments"
+      ],
+      "falsification_tests": [
+        "no correlation between sales and profit",
+        "correlation is spurious"
+      ],
+      "plausibility": 0.5,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.4,
+      "score": 0.06999999999999998,
+      "rationale": "Generated because a strong correlation was detected between variables. This suggests a potential causal relationship worth testing."
+    },
+    {
+      "id": "H_anom_sales",
+      "type": "causal",
+      "description": "Anomalies in sales caused by external event",
+      "source_signals": [
+        "anomaly_sales_iqr"
+      ],
+      "features": [
+        "sales"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "anomalies cluster around specific timestamps",
+        "anomalies correlate with external events"
+      ],
+      "falsification_tests": [
+        "anomalies are random noise",
+        "no external event correlation"
+      ],
+      "plausibility": 0.5,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.3,
+      "score": 0.09,
+      "rationale": "Generated because unusual patterns (outliers) were detected. These may indicate external factors or data quality issues."
+    },
+    {
+      "id": "H_anom_profit",
+      "type": "causal",
+      "description": "Anomalies in profit caused by external event",
+      "source_signals": [
+        "anomaly_profit_iqr"
+      ],
+      "features": [
+        "profit"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "anomalies cluster around specific timestamps",
+        "anomalies correlate with external events"
+      ],
+      "falsification_tests": [
+        "anomalies are random noise",
+        "no external event correlation"
+      ],
+      "plausibility": 0.5,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.3,
+      "score": 0.09,
+      "rationale": "Generated because unusual patterns (outliers) were detected. These may indicate external factors or data quality issues."
+    },
+    {
+      "id": "H_anom_margin__",
+      "type": "causal",
+      "description": "Anomalies in margin__ caused by external event",
+      "source_signals": [
+        "anomaly_margin___iqr"
+      ],
+      "features": [
+        "margin__"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "anomalies cluster around specific timestamps",
+        "anomalies correlate with external events"
+      ],
+      "falsification_tests": [
+        "anomalies are random noise",
+        "no external event correlation"
+      ],
+      "plausibility": 0.5,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.3,
+      "score": 0.09,
+      "rationale": "Generated because unusual patterns (outliers) were detected. These may indicate external factors or data quality issues."
+    },
+    {
+      "id": "H_segment_enforced",
+      "type": "segment-based",
+      "description": "Effects vary across user segments",
+      "source_signals": [
+        "diversity_enforcement"
+      ],
+      "features": [],
+      "segments": [],
+      "expected_observations": [],
+      "falsification_tests": [
+        "no segment differences"
+      ],
+      "plausibility": 0.6,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.0,
+      "score": 0.18,
+      "rationale": "Generated because clustering analysis found distinct groups in the data. Different segments may have different behaviors."
+    },
+    {
+      "id": "H_temporal_enforced",
+      "type": "temporal",
+      "description": "Patterns change over time",
+      "source_signals": [
+        "diversity_enforcement"
+      ],
+      "features": [],
+      "segments": [],
+      "expected_observations": [],
+      "falsification_tests": [
+        "no temporal changes"
+      ],
+      "plausibility": 0.6,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.0,
+      "score": 0.18
+    },
+    {
+      "id": "H_dq_missing",
+      "type": "data-quality",
+      "description": "Missing values are systemic, not random",
+      "source_signals": [
+        "missingness_analysis"
+      ],
+      "features": [
+        "region",
+        "sales",
+        "profit",
+        "margin__"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "missingness correlates with other variables",
+        "specific segments have higher missingness"
+      ],
+      "falsification_tests": [
+        "missingness is completely random",
+        "no pattern in missing data"
+      ],
+      "plausibility": 0.8,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.6,
+      "score": 0.12,
+      "rationale": "Generated as a fallback to ensure hypothesis diversity. May indicate signals are artifacts of data collection."
+    },
+    {
+      "id": "H_dq_outlier",
+      "type": "data-quality",
+      "description": "Outliers are data entry errors, not real signals",
+      "source_signals": [
+        "outlier_detection"
+      ],
+      "features": [
+        "sales",
+        "profit",
+        "margin__"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "outliers are exactly at round numbers",
+        "outliers are physically impossible values"
+      ],
+      "falsification_tests": [
+        "outliers are legitimate extreme values",
+        "outliers represent real phenomena"
+      ],
+      "plausibility": 0.8,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.5,
+      "score": 0.13999999999999999,
+      "rationale": "Generated as a fallback to ensure hypothesis diversity. May indicate signals are artifacts of data collection."
+    }
+  ],
+  "edges": [
+    {
+      "from_node": "H_corr_sales_profit",
+      "to_node": "H_temporal_enforced",
+      "edge_type": "competes_with"
+    },
+    {
+      "from_node": "H_anom_sales",
+      "to_node": "H_temporal_enforced",
+      "edge_type": "competes_with"
+    },
+    {
+      "from_node": "H_dq_missing",
+      "to_node": "H_corr_sales_profit",
+      "edge_type": "competes_with"
+    },
+    {
+      "from_node": "H_dq_missing",
+      "to_node": "H_anom_sales",
+      "edge_type": "competes_with"
+    }
+  ]
+}

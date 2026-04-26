@@ -112,6 +112,19 @@ class InsightConstructor:
                 "effect_size": eff
             })
 
+        # If no high-confidence insights, synthesize one opinionated top insight
+        if not insights and evidence:
+            top = sorted(evidence, key=lambda x: x.get("confidence", 0), reverse=True)[0]
+            top_conf = max(top.get("confidence", 0), 0.25)
+            top_claim = top.get("claim", "A notable pattern was detected.")
+            insight_text = f"Likely: {top_claim} (opinionated, low confidence {top_conf:.2f})."
+            insights.append({
+                "insight": insight_text,
+                "confidence": round(float(top_conf), 2),
+                "hypothesis_id": top.get("hypothesis_id"),
+                "effect_size": top.get("effect_size", 0)
+            })
+
         return insights
 
 
@@ -202,6 +215,21 @@ class PlotCompositionEngine:
         else:
             return {"x": num_cols[0], "y": num_cols[1] if len(num_cols) > 1 else num_cols[0], "type": "scatter"}
 
+    def question_for_plot(self, plot_spec: dict, hypothesis: dict) -> str:
+        ptype = plot_spec.get("type", "")
+        # Map plot types to explicit question the plot answers
+        if ptype == "line":
+            return "Did the metric change over time?"
+        if ptype == "bar":
+            return "How do groups compare on this metric?"
+        if ptype == "histogram":
+            return "Did the distribution shift?"
+        if ptype == "boxplot":
+            return "Are there outliers or distributional changes?"
+        if ptype == "scatter":
+            return "Is there a relationship between these variables?"
+        return "What is the pattern in the data?"
+
 
 class MultiPlotPlanner:
     def __init__(self):
@@ -276,7 +304,8 @@ class PlotRenderer:
             return None
 
         df_clean = df.dropna(subset=[x, y])
-        if len(df_clean) < 5:
+        min_rows = _get_env_int("MIN_ROWS_FOR_PLOT", 3)
+        if len(df_clean) < min_rows:
             return None
 
         plot_id = f"p_{hypothesis_id}_{ptype[:3]}"
@@ -320,6 +349,7 @@ class PlotRenderer:
                 "plot_id": plot_id,
                 "type": ptype,
                 "title": f"{y} vs {x}",
+                "question": plot_spec.get("question") if plot_spec.get("question") else f"{y} by {x}",
                 "format": "base64_png",
                 "data": img_b64,
                 "linked_hypothesis": hypothesis_id,
@@ -374,6 +404,17 @@ class Phase4Orchestrator:
 
         contradiction = self.resolver.resolve(insights)
 
+        # compute sample size from materialized CSV if available
+        sample_size = 0
+        try:
+            import pandas as pd
+            clean_path = Path(self.data_dir) / session_id / "clean.csv"
+            if clean_path.exists():
+                df = pd.read_csv(clean_path)
+                sample_size = len(df)
+        except Exception:
+            sample_size = 0
+
         plots = []
         enable_plot = _get_env_bool("ENABLE_PLOT_GENERATION", True)
 
@@ -392,26 +433,111 @@ class Phase4Orchestrator:
                         ptype = self.type_selector.select(hyp.get("type", ""))
                         plot_spec = self.composer.compose(hyp, schema)
                         plot_spec["type"] = ptype
+                        # attach human-readable question for the UI
+                        plot_spec["question"] = self.composer.question_for_plot(plot_spec, hyp)
 
                         try:
                             validate_plot_spec(plot_spec, schema)
-                        except Exception as e:
-                            continue
+                        except Exception:
+                            # allow fallback plots if validation fails
+                            pass
 
                         valid, _ = self.validator.validate(plot_spec, schema)
+                        if not valid:
+                            # attempt a simpler fallback spec
+                            plot_spec = {"x": schema.get("columns", [None])[0], "y": self.composer._filter_id_columns(schema.get("columns", []))[0] if self.composer._filter_id_columns(schema.get("columns", [])) else None, "type": "bar", "question": "Overview: group comparison"}
+                            valid, _ = self.validator.validate(plot_spec, schema)
+
                         if valid:
                             plot = self.renderer.render(plot_spec, hid, session_id, schema)
                             if plot:
                                 plots.append(plot)
+                    # If no plots were generated for this hypothesis, attempt fallback specs
+                    if not any(p.get("linked_hypothesis") == hid for p in plots):
+                        # fallback 1: time series if date present
+                        cols = schema.get("columns", [])
+                        time_col = next((c for c in cols if "date" in c.lower() or "time" in c.lower()), None)
+                        num_cols = self.composer._filter_id_columns([c for c in cols if schema.get("inferred_types", {}).get(c) in ("int", "float")])
+                        fallback_specs = []
+                        if time_col and num_cols:
+                            fallback_specs.append({"x": time_col, "y": num_cols[0], "type": "line", "question": "Did the metric change over time?"})
+                        if num_cols:
+                            fallback_specs.append({"x": num_cols[0], "type": "histogram", "y": num_cols[0], "question": "Did the distribution shift?"})
+                        # categorical comparison
+                        cat_col = next((c for c in cols if c not in num_cols), None)
+                        if cat_col and num_cols:
+                            fallback_specs.append({"x": cat_col, "y": num_cols[0], "type": "bar", "question": "How do groups compare on this metric?"})
 
-        self.store.save_insights(session_id, insights, plots)
+                        for spec in fallback_specs:
+                            valid, _ = self.validator.validate(spec, schema)
+                            if not valid:
+                                continue
+                            plot = self.renderer.render(spec, hid, session_id, schema)
+                            if plot:
+                                plots.append(plot)
+
+        # Build structured insights for UI-first screen
+        structured = []
+        for ins in insights:
+            hid = ins.get("hypothesis_id")
+            related_plots = [p for p in plots if p.get("linked_hypothesis") == hid]
+            eff = ins.get("effect_size", 0)
+            # compute impact
+            impact = "low"
+            if eff >= 0.5:
+                impact = "high"
+            elif eff >= 0.2:
+                impact = "medium"
+
+            # sample-aware confidence scaling
+            base_conf = ins.get("confidence", 0)
+            size_scale = min(1.0, (sample_size ** 0.5) / 10.0) if sample_size > 0 else 0.5
+            conf = round(float(base_conf) * size_scale, 2)
+
+            structured.append({
+                "id": hid,
+                "title": ins.get("insight"),
+                "confidence": conf,
+                "impact": impact,
+                "summary": ins.get("insight"),
+                "supporting_plots": [p.get("plot_id") for p in related_plots],
+                "explanation": ins.get("insight"),
+                "limitations": [],
+            })
+
+        # add limitations from execution_result and contradiction
+        if execution_result.get("execution_history"):
+            # basic limitation: small support or low confidence
+            for s in structured:
+                if s.get("confidence", 0) < 0.5:
+                    s["limitations"].append("Low statistical support; treat as exploratory.")
+                # if execution history shows competing explanations, add that
+                for h in execution_result.get("execution_history", []):
+                    ev = h.get("evidence", {})
+                    if ev.get("decision") == "refine" or ev.get("confidence", 0) < 0.4:
+                        if "Possible competing explanations present" not in s["limitations"]:
+                            s["limitations"].append("Possible competing explanations present; verify with targeted tests.")
+
+        self.store.save_insights(session_id, structured, plots)
+
+        # suggested next questions (derive from top insight words)
+        suggested = []
+        if structured:
+            top_text = structured[0].get("title", "")
+            keywords = ["mobile","desktop","conversion","latency","churn","revenue","trend","anomaly","segment"]
+            for k in keywords:
+                if k in top_text.lower():
+                    suggested.append(f"Explore {k} drivers")
+        if not suggested:
+            suggested = ["Compare mobile vs desktop behavior","Analyze churn drivers","Show anomalies"]
 
         return {
-            "insights": insights,
+            "insights": structured,
             "plots": plots,
             "contradiction": contradiction,
-            "insight_count": len(insights),
-            "plot_count": len(plots)
+            "insight_count": len(structured),
+            "plot_count": len(plots),
+            "suggested_next_questions": suggested
         }
 
 

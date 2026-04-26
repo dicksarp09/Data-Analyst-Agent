@@ -1,0 +1,57 @@
+{
+  "session_id": "92a3d048-c582-4ff6-a07d-6c0a92a19f88",
+  "accepted_hypotheses": [
+    "H_anom_lower_bound"
+  ],
+  "rejected_hypotheses": [
+    "H_corr_lower_bound_upper_bound",
+    "H_corr_outliers_count_outlier_percentage"
+  ],
+  "execution_history": [
+    {
+      "hypothesis_id": "H_corr_lower_bound_upper_bound",
+      "action": "reject",
+      "evidence": {
+        "confidence": 0.0,
+        "effect_size": 0.0,
+        "support": 0.0,
+        "decision": "reject"
+      },
+      "iteration": 0
+    },
+    {
+      "hypothesis_id": "H_corr_outliers_count_outlier_percentage",
+      "action": "reject",
+      "evidence": {
+        "confidence": 0.0,
+        "effect_size": 0.0,
+        "support": 0.0,
+        "decision": "reject"
+      },
+      "iteration": 1
+    },
+    {
+      "hypothesis_id": "H_anom_lower_bound",
+      "action": "accept",
+      "evidence": {
+        "confidence": 1.0,
+        "effect_size": 0.3,
+        "support": 1.0,
+        "decision": "accept"
+      },
+      "iteration": 2
+    }
+  ],
+  "insights": [
+    {
+      "insight": "Anomalies in lower_bound caused by external event Supported by evidence with confidence 1.00.",
+      "confidence": 1.0,
+      "hypothesis_id": "H_anom_lower_bound",
+      "effect_size": 0.3,
+      "type": "causal",
+      "generated_at": "execution"
+    }
+  ],
+  "iteration": 3,
+  "status": "completed"
+}

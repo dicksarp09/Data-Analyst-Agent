@@ -1,0 +1,40 @@
+{
+  "session_id": "ae9889f1-d8d2-4f53-bff4-47c13fe7ab5e",
+  "signal_count": 0,
+  "signals": [],
+  "data_summary": {
+    "total_rows": 7,
+    "total_columns": 5,
+    "numeric_columns": 0,
+    "categorical_columns": 5,
+    "date_columns": 0,
+    "column_list": [
+      "unnamed__0",
+      "profit",
+      "profit_1",
+      "profit_2",
+      "sales"
+    ],
+    "numeric_list": [],
+    "categorical_list": [
+      "unnamed__0",
+      "profit",
+      "profit_1",
+      "profit_2",
+      "sales"
+    ],
+    "date_list": [],
+    "missingness": {
+      "unnamed__0": 0.14285714285714285,
+      "profit": 0.14285714285714285,
+      "profit_1": 0.14285714285714285,
+      "profit_2": 0.14285714285714285,
+      "sales": 0.14285714285714285
+    },
+    "outliers": {},
+    "total_rows_raw": 7,
+    "valid_rows": 7,
+    "quarantined_rows": 0
+  },
+  "signal_insights": []
+}

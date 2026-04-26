@@ -2,11 +2,16 @@ import axios from 'axios'
 
 const API_BASE = '/'
 
-export const uploadDataset = async (file: File): Promise<{ session_id: string; file_size: number }> => {
+export const uploadDataset = async (file: File): Promise<any> => {
   const formData = new FormData()
   formData.append('file', file)
   
   const response = await axios.post(`${API_BASE}upload_csv`, formData)
+  return response.data
+}
+
+export const getFirstScreen = async (sessionId: string) => {
+  const response = await axios.get(`${API_BASE}first_screen/${sessionId}`)
   return response.data
 }
 
@@ -74,6 +79,16 @@ export const getPhase4Insights = async (sessionId: string) => {
 // Get phase4 plots
 export const getPhase4Plots = async (sessionId: string) => {
   const response = await axios.get(`${API_BASE}phase4/plots/${sessionId}`)
+  return response.data
+}
+
+export const approveExecution = async (sessionId: string) => {
+  const response = await axios.post(`${API_BASE}execution/${sessionId}/approve`)
+  return response.data
+}
+
+export const rejectExecution = async (sessionId: string, reason?: string) => {
+  const response = await axios.post(`${API_BASE}execution/${sessionId}/reject`, { reason })
   return response.data
 }
 

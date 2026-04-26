@@ -3,6 +3,7 @@ import { useAnalysisStore } from '../hooks/useAnalysis'
 
 export const RightPanel: React.FC = () => {
   const { selectedInsightId, trace, isLoading } = useAnalysisStore()
+  const { sessionId } = useAnalysisStore()
   
   // Only show when an insight is selected
   const shouldShow = selectedInsightId && !isLoading
@@ -81,6 +82,19 @@ export const RightPanel: React.FC = () => {
           </div>
         </div>
         
+        {/* Approval actions */}
+        <div>
+          <h4 className="text-xs text-gray-500 uppercase mb-2">Approval</h4>
+          <div className="flex gap-2">
+            <button className="flex-1 bg-green-600 hover:bg-green-500 text-white rounded py-2" onClick={async () => {
+              try { await fetch(`/execution/${sessionId}/approve`, { method: 'POST' }) } catch(e) { console.error(e) }
+            }}>Approve</button>
+            <button className="flex-1 bg-red-600 hover:bg-red-500 text-white rounded py-2" onClick={async () => {
+              try { await fetch(`/execution/${sessionId}/reject`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ reason: 'User rejected' }) }) } catch(e) { console.error(e) }
+            }}>Reject</button>
+          </div>
+        </div>
+
       </div>
     </div>
   )

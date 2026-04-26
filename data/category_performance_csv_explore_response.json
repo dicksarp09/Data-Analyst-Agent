@@ -1,0 +1,69 @@
+{
+  "session_id": "448bc78c-39dc-4fac-b123-147faae0bdf1",
+  "signal_count": 2,
+  "signals": [
+    {
+      "type": "correlation",
+      "pair": [
+        "sales",
+        "quantity"
+      ],
+      "strength": 0.758,
+      "p_value": 0.4528,
+      "method": "pearson",
+      "confidence": 0.5472,
+      "context": "Found strong positive relationship between sales and quantity (r=0.758). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "profit",
+        "margin__"
+      ],
+      "strength": 0.938,
+      "p_value": 0.2245,
+      "method": "pearson",
+      "confidence": 0.7755,
+      "context": "Found strong positive relationship between profit and margin__ (r=0.938). These variables move together."
+    }
+  ],
+  "data_summary": {
+    "total_rows": 3,
+    "total_columns": 5,
+    "numeric_columns": 4,
+    "categorical_columns": 1,
+    "date_columns": 0,
+    "column_list": [
+      "category",
+      "sales",
+      "profit",
+      "quantity",
+      "margin__"
+    ],
+    "numeric_list": [
+      "sales",
+      "profit",
+      "quantity",
+      "margin__"
+    ],
+    "categorical_list": [
+      "category"
+    ],
+    "date_list": [],
+    "missingness": {
+      "category": 0.0,
+      "sales": 0.0,
+      "profit": 0.0,
+      "quantity": 0.0,
+      "margin__": 0.0
+    },
+    "outliers": {},
+    "total_rows_raw": 3,
+    "valid_rows": 3,
+    "quarantined_rows": 0
+  },
+  "signal_insights": [
+    "Correlation: sales and quantity have r=0.758 correlation",
+    "Correlation: profit and margin__ have r=0.938 correlation"
+  ]
+}

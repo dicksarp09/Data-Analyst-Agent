@@ -1,0 +1,737 @@
+{
+  "session_id": "ed18028c-efc1-4954-b3c7-f265c5075d3d",
+  "signal_count": 50,
+  "signals": [
+    {
+      "type": "correlation",
+      "pair": [
+        "discount",
+        "column"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between discount and column (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "discount",
+        "profit"
+      ],
+      "strength": 0.977,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between discount and profit (r=0.977). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "discount",
+        "quantity"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between discount and quantity (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "discount",
+        "sales"
+      ],
+      "strength": 0.909,
+      "p_value": 0.0003,
+      "method": "pearson",
+      "confidence": 0.9997,
+      "context": "Found strong positive relationship between discount and sales (r=0.909). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "discount",
+        "shipping_cost"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between discount and shipping_cost (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "discount",
+        "order_year"
+      ],
+      "strength": 0.998,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between discount and order_year (r=0.998). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "discount",
+        "order_month"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between discount and order_month (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "discount",
+        "order_quarter"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between discount and order_quarter (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "discount",
+        "order_day_of_week"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between discount and order_day_of_week (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "discount",
+        "is_weekend"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between discount and is_weekend (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "discount",
+        "order_week"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between discount and order_week (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "discount",
+        "sales_per_unit"
+      ],
+      "strength": 0.997,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between discount and sales_per_unit (r=0.997). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "column",
+        "profit"
+      ],
+      "strength": 0.977,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between column and profit (r=0.977). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "column",
+        "quantity"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between column and quantity (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "column",
+        "sales"
+      ],
+      "strength": 0.909,
+      "p_value": 0.0003,
+      "method": "pearson",
+      "confidence": 0.9997,
+      "context": "Found strong positive relationship between column and sales (r=0.909). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "column",
+        "shipping_cost"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between column and shipping_cost (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "column",
+        "order_year"
+      ],
+      "strength": 0.998,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between column and order_year (r=0.998). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "column",
+        "order_month"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between column and order_month (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "column",
+        "order_quarter"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between column and order_quarter (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "column",
+        "order_day_of_week"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between column and order_day_of_week (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "column",
+        "is_weekend"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between column and is_weekend (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "column",
+        "order_week"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between column and order_week (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "column",
+        "sales_per_unit"
+      ],
+      "strength": 0.997,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between column and sales_per_unit (r=0.997). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "profit",
+        "quantity"
+      ],
+      "strength": 0.977,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between profit and quantity (r=0.977). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "profit",
+        "sales"
+      ],
+      "strength": 0.961,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between profit and sales (r=0.961). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "profit",
+        "shipping_cost"
+      ],
+      "strength": 0.98,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between profit and shipping_cost (r=0.98). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "profit",
+        "order_year"
+      ],
+      "strength": 0.975,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between profit and order_year (r=0.975). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "profit",
+        "order_month"
+      ],
+      "strength": 0.977,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between profit and order_month (r=0.977). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "profit",
+        "order_quarter"
+      ],
+      "strength": 0.977,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between profit and order_quarter (r=0.977). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "profit",
+        "order_day_of_week"
+      ],
+      "strength": 0.977,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between profit and order_day_of_week (r=0.977). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "profit",
+        "is_weekend"
+      ],
+      "strength": 0.977,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between profit and is_weekend (r=0.977). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "profit",
+        "order_week"
+      ],
+      "strength": 0.977,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between profit and order_week (r=0.977). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "profit",
+        "sales_per_unit"
+      ],
+      "strength": 0.987,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between profit and sales_per_unit (r=0.987). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "quantity",
+        "sales"
+      ],
+      "strength": 0.909,
+      "p_value": 0.0003,
+      "method": "pearson",
+      "confidence": 0.9997,
+      "context": "Found strong positive relationship between quantity and sales (r=0.909). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "quantity",
+        "shipping_cost"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between quantity and shipping_cost (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "quantity",
+        "order_year"
+      ],
+      "strength": 0.998,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between quantity and order_year (r=0.998). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "quantity",
+        "order_month"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between quantity and order_month (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "quantity",
+        "order_quarter"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between quantity and order_quarter (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "quantity",
+        "order_day_of_week"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between quantity and order_day_of_week (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "quantity",
+        "is_weekend"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between quantity and is_weekend (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "quantity",
+        "order_week"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between quantity and order_week (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "quantity",
+        "sales_per_unit"
+      ],
+      "strength": 0.997,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between quantity and sales_per_unit (r=0.997). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "sales",
+        "shipping_cost"
+      ],
+      "strength": 0.916,
+      "p_value": 0.0002,
+      "method": "pearson",
+      "confidence": 0.9998,
+      "context": "Found strong positive relationship between sales and shipping_cost (r=0.916). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "sales",
+        "order_year"
+      ],
+      "strength": 0.913,
+      "p_value": 0.0002,
+      "method": "pearson",
+      "confidence": 0.9998,
+      "context": "Found strong positive relationship between sales and order_year (r=0.913). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "sales",
+        "order_month"
+      ],
+      "strength": 0.909,
+      "p_value": 0.0003,
+      "method": "pearson",
+      "confidence": 0.9997,
+      "context": "Found strong positive relationship between sales and order_month (r=0.909). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "sales",
+        "order_quarter"
+      ],
+      "strength": 0.909,
+      "p_value": 0.0003,
+      "method": "pearson",
+      "confidence": 0.9997,
+      "context": "Found strong positive relationship between sales and order_quarter (r=0.909). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "sales",
+        "order_day_of_week"
+      ],
+      "strength": 0.909,
+      "p_value": 0.0003,
+      "method": "pearson",
+      "confidence": 0.9997,
+      "context": "Found strong positive relationship between sales and order_day_of_week (r=0.909). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "sales",
+        "is_weekend"
+      ],
+      "strength": 0.909,
+      "p_value": 0.0003,
+      "method": "pearson",
+      "confidence": 0.9997,
+      "context": "Found strong positive relationship between sales and is_weekend (r=0.909). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "sales",
+        "order_week"
+      ],
+      "strength": 0.909,
+      "p_value": 0.0003,
+      "method": "pearson",
+      "confidence": 0.9997,
+      "context": "Found strong positive relationship between sales and order_week (r=0.909). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "sales",
+        "sales_per_unit"
+      ],
+      "strength": 0.937,
+      "p_value": 0.0001,
+      "method": "pearson",
+      "confidence": 0.9999,
+      "context": "Found strong positive relationship between sales and sales_per_unit (r=0.937). These variables move together."
+    }
+  ],
+  "data_summary": {
+    "total_rows": 10,
+    "total_columns": 15,
+    "numeric_columns": 14,
+    "categorical_columns": 1,
+    "date_columns": 0,
+    "column_list": [
+      "unnamed__0",
+      "discount",
+      "column",
+      "profit",
+      "quantity",
+      "sales",
+      "shipping_cost",
+      "order_year",
+      "order_month",
+      "order_quarter",
+      "order_day_of_week",
+      "is_weekend",
+      "order_week",
+      "profit_margin",
+      "sales_per_unit"
+    ],
+    "numeric_list": [
+      "discount",
+      "column",
+      "profit",
+      "quantity",
+      "sales",
+      "shipping_cost",
+      "order_year",
+      "order_month",
+      "order_quarter",
+      "order_day_of_week",
+      "is_weekend",
+      "order_week",
+      "profit_margin",
+      "sales_per_unit"
+    ],
+    "categorical_list": [
+      "unnamed__0"
+    ],
+    "date_list": [],
+    "missingness": {
+      "unnamed__0": 0.0,
+      "discount": 0.0,
+      "column": 0.0,
+      "profit": 0.0,
+      "quantity": 0.0,
+      "sales": 0.0,
+      "shipping_cost": 0.0,
+      "order_year": 0.0,
+      "order_month": 0.0,
+      "order_quarter": 0.0,
+      "order_day_of_week": 0.0,
+      "is_weekend": 0.0,
+      "order_week": 0.0,
+      "profit_margin": 0.3,
+      "sales_per_unit": 0.0
+    },
+    "outliers": {
+      "discount": "values beyond 1.5 * IQR detected",
+      "column": "values beyond 1.5 * IQR detected",
+      "profit": "values beyond 1.5 * IQR detected",
+      "quantity": "values beyond 1.5 * IQR detected",
+      "sales": "values beyond 1.5 * IQR detected",
+      "shipping_cost": "values beyond 1.5 * IQR detected",
+      "order_year": "values beyond 1.5 * IQR detected",
+      "order_month": "values beyond 1.5 * IQR detected",
+      "order_quarter": "values beyond 1.5 * IQR detected",
+      "order_day_of_week": "values beyond 1.5 * IQR detected",
+      "is_weekend": "values beyond 1.5 * IQR detected",
+      "order_week": "values beyond 1.5 * IQR detected",
+      "sales_per_unit": "values beyond 1.5 * IQR detected"
+    },
+    "total_rows_raw": 10,
+    "valid_rows": 10,
+    "quarantined_rows": 0
+  },
+  "signal_insights": [
+    "Correlation: discount and column have r=1.0 correlation",
+    "Correlation: discount and profit have r=0.977 correlation",
+    "Correlation: discount and quantity have r=1.0 correlation",
+    "Correlation: discount and sales have r=0.909 correlation",
+    "Correlation: discount and shipping_cost have r=1.0 correlation",
+    "Correlation: discount and order_year have r=0.998 correlation",
+    "Correlation: discount and order_month have r=1.0 correlation",
+    "Correlation: discount and order_quarter have r=1.0 correlation",
+    "Correlation: discount and order_day_of_week have r=1.0 correlation",
+    "Correlation: discount and is_weekend have r=1.0 correlation",
+    "Correlation: discount and order_week have r=1.0 correlation",
+    "Correlation: discount and sales_per_unit have r=0.997 correlation",
+    "Correlation: column and profit have r=0.977 correlation",
+    "Correlation: column and quantity have r=1.0 correlation",
+    "Correlation: column and sales have r=0.909 correlation",
+    "Correlation: column and shipping_cost have r=1.0 correlation",
+    "Correlation: column and order_year have r=0.998 correlation",
+    "Correlation: column and order_month have r=1.0 correlation",
+    "Correlation: column and order_quarter have r=1.0 correlation",
+    "Correlation: column and order_day_of_week have r=1.0 correlation",
+    "Correlation: column and is_weekend have r=1.0 correlation",
+    "Correlation: column and order_week have r=1.0 correlation",
+    "Correlation: column and sales_per_unit have r=0.997 correlation",
+    "Correlation: profit and quantity have r=0.977 correlation",
+    "Correlation: profit and sales have r=0.961 correlation",
+    "Correlation: profit and shipping_cost have r=0.98 correlation",
+    "Correlation: profit and order_year have r=0.975 correlation",
+    "Correlation: profit and order_month have r=0.977 correlation",
+    "Correlation: profit and order_quarter have r=0.977 correlation",
+    "Correlation: profit and order_day_of_week have r=0.977 correlation",
+    "Correlation: profit and is_weekend have r=0.977 correlation",
+    "Correlation: profit and order_week have r=0.977 correlation",
+    "Correlation: profit and sales_per_unit have r=0.987 correlation",
+    "Correlation: quantity and sales have r=0.909 correlation",
+    "Correlation: quantity and shipping_cost have r=1.0 correlation",
+    "Correlation: quantity and order_year have r=0.998 correlation",
+    "Correlation: quantity and order_month have r=1.0 correlation",
+    "Correlation: quantity and order_quarter have r=1.0 correlation",
+    "Correlation: quantity and order_day_of_week have r=1.0 correlation",
+    "Correlation: quantity and is_weekend have r=1.0 correlation",
+    "Correlation: quantity and order_week have r=1.0 correlation",
+    "Correlation: quantity and sales_per_unit have r=0.997 correlation",
+    "Correlation: sales and shipping_cost have r=0.916 correlation",
+    "Correlation: sales and order_year have r=0.913 correlation",
+    "Correlation: sales and order_month have r=0.909 correlation",
+    "Correlation: sales and order_quarter have r=0.909 correlation",
+    "Correlation: sales and order_day_of_week have r=0.909 correlation",
+    "Correlation: sales and is_weekend have r=0.909 correlation",
+    "Correlation: sales and order_week have r=0.909 correlation",
+    "Correlation: sales and sales_per_unit have r=0.937 correlation"
+  ]
+}

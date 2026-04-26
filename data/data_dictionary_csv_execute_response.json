@@ -1,0 +1,32 @@
+{
+  "session_id": "e0b2bf4a-33a6-4880-9229-8a5c6fd8a3a2",
+  "accepted_hypotheses": [
+    "H_anom_unique_values"
+  ],
+  "rejected_hypotheses": [],
+  "execution_history": [
+    {
+      "hypothesis_id": "H_anom_unique_values",
+      "action": "accept",
+      "evidence": {
+        "confidence": 1.0,
+        "effect_size": 0.3,
+        "support": 1.0,
+        "decision": "accept"
+      },
+      "iteration": 0
+    }
+  ],
+  "insights": [
+    {
+      "insight": "Anomalies in unique_values caused by external event Supported by evidence with confidence 1.00.",
+      "confidence": 1.0,
+      "hypothesis_id": "H_anom_unique_values",
+      "effect_size": 0.3,
+      "type": "causal",
+      "generated_at": "execution"
+    }
+  ],
+  "iteration": 1,
+  "status": "completed"
+}

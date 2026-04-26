@@ -3,9 +3,10 @@ import { useDropzone } from 'react-dropzone'
 import { Upload, Loader2 } from 'lucide-react'
 import { useAnalysisStore } from '../hooks/useAnalysis'
 import { uploadDataset, runPipeline } from '../api/client'
+import { pollFirstScreen, subscribeToProgress } from '../hooks/useAnalysis'
 
 export const UploadZone: React.FC = () => {
-  const { setSessionId, setDatasetMeta, setInsights, setPlots, setTrace, setLoading, isLoading, loadingMessage } = useAnalysisStore()
+  const { setSessionId, setDatasetMeta, setInsights, setPlots, setTrace, setLoading, setPhaseStatus, isLoading, loadingMessage } = useAnalysisStore()
   
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: { 'text/csv': ['.csv'] },
@@ -22,31 +23,50 @@ export const UploadZone: React.FC = () => {
         const sessionId = uploadResult.session_id
         setSessionId(sessionId)
         
-        setLoading(true, 'Running analysis pipeline...')
-        
-        // Run full pipeline
-        const pipelineResult = await runPipeline(sessionId)
-        
-        // Update state
-        setDatasetMeta({
-          rows: pipelineResult.dataset_meta?.rows || 0,
-          columns: pipelineResult.dataset_meta?.columns || 0,
-          quality: pipelineResult.dataset_meta?.quality || {}
+        setLoading(true, 'Waiting for analysis to complete...')
+
+        // Subscribe to progress SSE and poll first_screen until ready
+        const es = subscribeToProgress(sessionId, (progress) => {
+          if (progress && progress.phase) {
+            // map incoming progress to phase status
+            try {
+              setPhaseStatus(progress.phase, progress.status || 'running')
+            } catch (e) {
+              // ignore
+            }
+          }
+          setLoading(true, progress?.message || 'Processing...')
         })
-        
-        // Convert plots array to record
-        const plotsRecord: Record<string, any> = {}
-        if (pipelineResult.plots) {
-          Object.entries(pipelineResult.plots).forEach(([key, plot]) => {
-            plotsRecord[key] = plot
+
+        try {
+          const firstScreen = await pollFirstScreen(sessionId, (p) => {
+            setLoading(true, p?.message || 'Processing...')
           })
+
+          // Update state from first screen payload
+          setDatasetMeta({
+            rows: firstScreen.dataset_meta?.rows || 0,
+            columns: firstScreen.dataset_meta?.columns || 0,
+            quality: firstScreen.dataset_meta?.quality || {}
+          })
+
+          const plotsRecord: Record<string, any> = {}
+          if (firstScreen.plots) {
+            // firstScreen.plots may be array or object
+            if (Array.isArray(firstScreen.plots)) {
+              firstScreen.plots.forEach((p: any) => { plotsRecord[p.plot_id || p.id || p.title] = p })
+            } else {
+              Object.entries(firstScreen.plots).forEach(([key, plot]) => { plotsRecord[key] = plot })
+            }
+          }
+
+          setPlots(plotsRecord)
+          setInsights(firstScreen.insights || [])
+          setTrace(firstScreen.trace || [])
+        } finally {
+          try { es.close() } catch (e) {}
+          setLoading(false)
         }
-        
-        setPlots(plotsRecord)
-        setInsights(pipelineResult.insights || [])
-        setTrace(pipelineResult.trace || [])
-        
-        setLoading(false)
       } catch (error) {
         console.error('Upload failed:', error)
         setLoading(false)

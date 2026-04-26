@@ -71,7 +71,7 @@ const SelectedInsightHeader: React.FC = () => {
       </div>
       
       <p className="text-gray-200 text-lg">
-        {insight.insight || insight.claim || 'No description'}
+        {insight.title || insight.insight || insight.summary || insight.claim || 'No description'}
       </p>
       
       <div className="flex items-center gap-3 text-sm text-gray-500">

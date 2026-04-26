@@ -38,16 +38,16 @@ export const InsightCard: React.FC<InsightCardProps> = ({ insight, isSelected, o
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1">
           <p className="text-gray-200 text-sm line-clamp-2">
-            {insight.insight || insight.claim || 'No description'}
+            {insight.title || insight.insight || insight.summary || insight.claim || 'No description'}
           </p>
           
           <div className="flex items-center gap-2 mt-2">
             <span className="text-xs text-gray-500 uppercase">
-              {insight.type || 'insight'}
+              {insight.type || insight.impact || 'insight'}
             </span>
-            {insight.plot_ids && insight.plot_ids.length > 0 && (
+            {((insight.plot_ids && insight.plot_ids.length) || (insight.supporting_plots && insight.supporting_plots.length)) > 0 && (
               <span className="text-xs text-gray-500">
-                • {insight.plot_ids.length} plot{insight.plot_ids.length > 1 ? 's' : ''}
+                • { (insight.plot_ids || insight.supporting_plots || []).length } plot{((insight.plot_ids || insight.supporting_plots || []).length > 1 ? 's' : '')}
               </span>
             )}
           </div>

@@ -1,0 +1,45 @@
+{
+  "session_id": "d5599a14-21f5-4520-90bd-cbe42d79b447",
+  "accepted_hypotheses": [
+    "H_anom_sales"
+  ],
+  "rejected_hypotheses": [
+    "H_corr_sales_profit"
+  ],
+  "execution_history": [
+    {
+      "hypothesis_id": "H_corr_sales_profit",
+      "action": "reject",
+      "evidence": {
+        "confidence": 0.0,
+        "effect_size": 0.0,
+        "support": 0.0,
+        "decision": "reject"
+      },
+      "iteration": 0
+    },
+    {
+      "hypothesis_id": "H_anom_sales",
+      "action": "accept",
+      "evidence": {
+        "confidence": 1.0,
+        "effect_size": 0.3,
+        "support": 1.0,
+        "decision": "accept"
+      },
+      "iteration": 1
+    }
+  ],
+  "insights": [
+    {
+      "insight": "Anomalies in sales caused by external event Supported by evidence with confidence 1.00.",
+      "confidence": 1.0,
+      "hypothesis_id": "H_anom_sales",
+      "effect_size": 0.3,
+      "type": "causal",
+      "generated_at": "execution"
+    }
+  ],
+  "iteration": 2,
+  "status": "completed"
+}

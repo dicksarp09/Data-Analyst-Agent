@@ -18,7 +18,7 @@ logger = setup_logging(LOG_DIR, LOG_LEVEL)
 # Create request monitor
 request_monitor = RequestMonitor(logger)
 
-from fastapi import FastAPI, UploadFile, HTTPException
+from fastapi import FastAPI, UploadFile, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, FileResponse
 from sse_starlette import EventSourceResponse
@@ -55,6 +55,7 @@ from app.execute import ExecutionEngine, ExecutionStore
 from app.phase4 import Phase4Orchestrator, ChatInterface, _get_env_int, _get_env_bool
 from app.chat_router import IntelligentChatRouter, detect_question_type, build_execution_plan
 from app.progress import progress_store, progress_generator
+from datetime import datetime
 
 # Import new layer routes
 from app.api.nlq_routes import router as nlq_router
@@ -140,7 +141,7 @@ _phase_executors = {}
 
 
 @app.post("/upload_csv", response_model=UploadResponse)
-async def upload_csv(file: UploadFile):
+async def upload_csv(file: UploadFile, background_tasks: BackgroundTasks):
     session_id = str(uuid.uuid4())
     content = await file.read()
 
@@ -178,11 +179,65 @@ async def upload_csv(file: UploadFile):
         "quarantined_rows": quarantine_count,
     }
 
+    # Start pipeline in background and return immediately with processing status
+    def _run_pipeline_back(sid: str):
+        try:
+            progress_store.set_phase(sid, "explore", "Starting signal detection (background)")
+            signals = signal_orchestrator.run_exploration(sid, df)
+
+            progress_store.set_phase(sid, "hypotheses", "Building hypothesis graph")
+            schema = _session_schemas.get(sid, {})
+            hypothesis_graph = hypothesis_orchestrator.build_hypotheses(sid, signals, schema)
+
+            progress_store.set_phase(sid, "execute", "Executing hypotheses")
+
+            # Execution with retries
+            exec_attempts = 0
+            execution_result = None
+            while exec_attempts < 3:
+                try:
+                    execution_result = execution_engine.run(sid, hypothesis_graph)
+                    execution_store.save_execution(sid, execution_result)
+                    break
+                except Exception as e:
+                    exec_attempts += 1
+                    progress_store.set_phase(sid, "execute", f"Execution error, retry {exec_attempts}: {str(e)}")
+                    time.sleep(1 + exec_attempts)
+
+            if execution_result is None:
+                raise RuntimeError("Execution failed after retries")
+
+            progress_store.set_phase(sid, "phase4", "Generating insights and plots")
+
+            # Phase4 with retries
+            phase4_attempts = 0
+            phase4_result = None
+            while phase4_attempts < 2:
+                try:
+                    phase4_result = phase4_orchestrator.run(sid, execution_result, hypothesis_graph, schema)
+                    break
+                except Exception as e:
+                    phase4_attempts += 1
+                    progress_store.set_phase(sid, "phase4", f"Phase4 error, retry {phase4_attempts}: {str(e)}")
+                    time.sleep(1 + phase4_attempts)
+
+            if phase4_result is None:
+                raise RuntimeError("Phase4 failed after retries")
+
+            progress_store.set_phase(sid, "completed", "Analysis complete")
+        except Exception as e:
+            progress_store.set_phase(sid, "error", f"Pipeline error: {str(e)}")
+
+    background_tasks.add_task(_run_pipeline_back, session_id)
+
+    first_screen = {"status": "processing", "progress_endpoint": f"/progress/{session_id}", "first_screen": None}
+
     return UploadResponse(
         session_id=session_id,
         checksum=checksum,
         file_size=file_size,
-        message="CSV uploaded and processed successfully",
+        message="CSV uploaded and processing started",
+        first_screen=first_screen,
     )
 
 
@@ -487,6 +542,119 @@ def get_hypotheses(session_id: str):
     )
 
 
+@app.get("/first_screen/{session_id}")
+def get_first_screen(session_id: str):
+    # Return Phase4 insights/plots if available, else progress status
+    insights = phase4_orchestrator.store.load_insights(session_id)
+    if insights:
+        return {"status": "ready", "first_screen": insights}
+
+    progress = progress_store.get_progress(session_id)
+    return {"status": progress.get("phase", "idle"), "progress": progress}
+
+
+@app.get("/progress/{session_id}")
+def get_progress(session_id: str):
+    return progress_store.get_progress(session_id)
+
+
+@app.post("/run_pipeline")
+def run_pipeline(request: dict):
+    session_id = request.get("session_id")
+    if not session_id:
+        raise HTTPException(status_code=400, detail="session_id required")
+
+    if session_id not in _session_schemas:
+        raise HTTPException(status_code=404, detail="Session not found")
+
+    # run pipeline synchronously (caller expects immediate completion)
+    try:
+        progress_store.set_phase(session_id, "explore", "Starting signal detection")
+        conn = duckdb_connector.connections.get(session_id)
+        if not conn:
+            duckdb_connector.load_session(session_id)
+            conn = duckdb_connector.connections.get(session_id)
+        import pandas as pd
+        df = conn.execute("SELECT * FROM clean_dataset").fetchdf()
+        signals = signal_orchestrator.run_exploration(session_id, df)
+
+        progress_store.set_phase(session_id, "hypotheses", "Building hypothesis graph")
+        schema = _session_schemas.get(session_id, {})
+        hypothesis_graph = hypothesis_orchestrator.build_hypotheses(session_id, signals, schema)
+
+        progress_store.set_phase(session_id, "execute", "Executing hypotheses")
+        execution_result = execution_engine.run(session_id, hypothesis_graph)
+        execution_store.save_execution(session_id, execution_result)
+
+        progress_store.set_phase(session_id, "phase4", "Generating insights and plots")
+        phase4_result = phase4_orchestrator.run(session_id, execution_result, hypothesis_graph, schema)
+
+        progress_store.set_phase(session_id, "completed", "Analysis complete")
+
+        return {"status": "ready", "first_screen": phase4_result}
+    except Exception as e:
+        progress_store.set_phase(session_id, "error", str(e))
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/phase4/insights/{session_id}")
+def get_phase4_insights(session_id: str):
+    insights = phase4_orchestrator.store.load_insights(session_id)
+    if not insights:
+        raise HTTPException(status_code=404, detail="Phase4 insights not found")
+    return insights.get("insights", [])
+
+
+@app.get("/phase4/plots/{session_id}")
+def get_phase4_plots(session_id: str):
+    insights = phase4_orchestrator.store.load_insights(session_id)
+    if not insights:
+        raise HTTPException(status_code=404, detail="Phase4 insights not found")
+    return insights.get("plots", [])
+
+
+@app.get("/progress/stream/{session_id}")
+def progress_stream(session_id: str):
+    return EventSourceResponse(progress_generator(session_id))
+
+
+@app.post("/execution/{session_id}/approve")
+def approve_execution(session_id: str):
+    result = execution_store.load_execution(session_id)
+    if not result:
+        raise HTTPException(status_code=404, detail="Execution not found")
+
+    result.setdefault('approval', {})
+    result['approval'].update({
+        'status': 'approved',
+        'by': 'human',
+        'timestamp': datetime.utcnow().isoformat() + 'Z'
+    })
+
+    execution_store.save_execution(session_id, result)
+    progress_store.set_phase(session_id, 'approval', 'approved by human')
+    return {"status": "approved"}
+
+
+@app.post("/execution/{session_id}/reject")
+def reject_execution(session_id: str, reason: dict = None):
+    result = execution_store.load_execution(session_id)
+    if not result:
+        raise HTTPException(status_code=404, detail="Execution not found")
+
+    result.setdefault('approval', {})
+    result['approval'].update({
+        'status': 'rejected',
+        'by': 'human',
+        'reason': (reason or {}).get('reason') if isinstance(reason, dict) else None,
+        'timestamp': datetime.utcnow().isoformat() + 'Z'
+    })
+
+    execution_store.save_execution(session_id, result)
+    progress_store.set_phase(session_id, 'approval', 'rejected by human')
+    return {"status": "rejected"}
+
+
 @app.post("/execute", response_model=ExecutionResponse)
 async def run_execution(request: ExecuteRequest):
     if request.session_id not in _session_schemas:
@@ -520,6 +688,7 @@ async def run_execution(request: ExecuteRequest):
             rejected = result.get("rejected_hypotheses", [])
             history = result.get("execution_history", [])
             iterations = result.get("iteration", 0)
+            approval_required = result.get("approval_required", False)
             
             progress_store.add_log(request.session_id, f"Execution complete after {iterations} iterations")
             
@@ -548,6 +717,7 @@ async def run_execution(request: ExecuteRequest):
                 insights=result.get("insights", []),
                 iteration=iterations,
                 status=result.get("status", "completed"),
+                approval_required=approval_required,
             )
         except Exception as e:
             import traceback
