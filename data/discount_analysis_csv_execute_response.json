@@ -1,0 +1,47 @@
+{
+  "session_id": "ae9889f1-d8d2-4f53-bff4-47c13fe7ab5e",
+  "accepted_hypotheses": [],
+  "rejected_hypotheses": [
+    "H_segment_enforced",
+    "H_temporal_enforced",
+    "H_dq_enforced"
+  ],
+  "execution_history": [
+    {
+      "hypothesis_id": "H_segment_enforced",
+      "action": "reject",
+      "evidence": {
+        "confidence": 0.0,
+        "effect_size": 0.0,
+        "support": 0.0,
+        "decision": "reject"
+      },
+      "iteration": 0
+    },
+    {
+      "hypothesis_id": "H_temporal_enforced",
+      "action": "reject",
+      "evidence": {
+        "confidence": 0.0,
+        "effect_size": 0.0,
+        "support": 0.0,
+        "decision": "reject"
+      },
+      "iteration": 1
+    },
+    {
+      "hypothesis_id": "H_dq_enforced",
+      "action": "reject",
+      "evidence": {
+        "confidence": 0.0,
+        "effect_size": 0.0,
+        "support": 0.0,
+        "decision": "reject"
+      },
+      "iteration": 2
+    }
+  ],
+  "insights": [],
+  "iteration": 3,
+  "status": "completed"
+}

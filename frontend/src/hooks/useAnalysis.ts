@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { getFirstScreen, subscribeToProgress as subscribeProgressEvent } from '../api/client'
 
 export type ViewMode = 'chat' | 'insights' | 'report' | 'explore' | 'insight' | 'simulation'
 
@@ -202,9 +203,9 @@ export const useAnalysisStore = create<AppState>((set, get) => ({
     const { plots, insights, selectedInsightId } = get()
     const insight = insights.find(i => i.id === selectedInsightId)
     if (!insight) return []
-    
-    return insight.plot_ids
-      .map(pid => plots[pid])
+    const ids = insight.plot_ids || insight.supporting_plots || []
+    return ids
+      .map((pid: string) => plots[pid] || plots[pid.replace(/^p_/, '')])
       .filter(Boolean)
   },
   
@@ -218,3 +219,46 @@ export const useAnalysisStore = create<AppState>((set, get) => ({
     return message?.analysis?.insights || []
   }
 }))
+
+export const pollFirstScreen = async (
+  sessionId: string,
+  onProgress?: (progress: any) => void,
+  timeoutMs = 300000
+) => {
+  const start = Date.now()
+  while (Date.now() - start < timeoutMs) {
+    try {
+      const res = await getFirstScreen(sessionId)
+      // backend returns { status: 'processing'|'ready', progress: {...} } or full first_screen
+      if (res && (res.status === 'ready' || res.status === 'completed')) {
+        return res.first_screen || res
+      }
+
+      if (res && res.progress) onProgress?.(res.progress)
+      else onProgress?.(res)
+    } catch (err) {
+      onProgress?.({ error: String(err) })
+    }
+
+    // backoff
+    // eslint-disable-next-line no-await-in-loop
+    await new Promise((r) => setTimeout(r, 2000))
+  }
+  throw new Error('Timed out waiting for first screen')
+}
+
+export const subscribeToProgress = (sessionId: string, onEvent: (ev: any) => void) => {
+  const es = subscribeProgressEvent(sessionId)
+  es.onmessage = (e: MessageEvent) => {
+    try {
+      const payload = JSON.parse(e.data)
+      onEvent(payload)
+    } catch (err) {
+      onEvent({ raw: e.data })
+    }
+  }
+  es.onerror = (err) => {
+    console.error('SSE error', err)
+  }
+  return es
+}

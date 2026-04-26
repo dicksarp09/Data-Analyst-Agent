@@ -1,0 +1,33 @@
+{
+  "session_id": "448bc78c-39dc-4fac-b123-147faae0bdf1",
+  "insight_count": 1,
+  "plot_count": 2,
+  "insights": [
+    {
+      "insight": "Behavioral differences detected. Effects vary across user segments Confidence: 0.30.",
+      "confidence": 0.3,
+      "hypothesis_id": "H_segment_enforced",
+      "effect_size": 0.3,
+      "type": "segment-based",
+      "generated_at": "execution"
+    }
+  ],
+  "plots": [
+    {
+      "plot_id": "p_H_segment_enforced_0",
+      "type": "bar",
+      "title": "segment-based: overall pattern",
+      "linked_hypothesis": "H_segment_enforced",
+      "format": "placeholder",
+      "error": "Rendering failed, showing summary instead"
+    },
+    {
+      "plot_id": "p_H_segment_enforced_1",
+      "type": "bar",
+      "title": "segment-based: group differences",
+      "linked_hypothesis": "H_segment_enforced",
+      "format": "placeholder",
+      "error": "Rendering failed, showing summary instead"
+    }
+  ]
+}

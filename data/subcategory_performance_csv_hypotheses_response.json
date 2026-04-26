@@ -1,0 +1,142 @@
+{
+  "session_id": "d793ea52-835a-4207-b242-f0af97ff0a38",
+  "node_count": 5,
+  "edge_count": 2,
+  "execution_order": [
+    "H_temporal_enforced",
+    "H_segment_enforced",
+    "H_dq_outlier",
+    "H_dq_missing",
+    "H_corr_sales_profit"
+  ],
+  "nodes": [
+    {
+      "id": "H_corr_sales_profit",
+      "type": "causal",
+      "description": "sales influences profit with strength 0.829",
+      "source_signals": [
+        "correlation_sales_profit"
+      ],
+      "features": [
+        "sales",
+        "profit"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "sales increases when profit increases",
+        "relationship holds across all segments"
+      ],
+      "falsification_tests": [
+        "no correlation between sales and profit",
+        "correlation is spurious"
+      ],
+      "plausibility": 0.5,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.4,
+      "score": 0.06999999999999998,
+      "rationale": "Generated because a strong correlation was detected between variables. This suggests a potential causal relationship worth testing."
+    },
+    {
+      "id": "H_segment_enforced",
+      "type": "segment-based",
+      "description": "Effects vary across user segments",
+      "source_signals": [
+        "diversity_enforcement"
+      ],
+      "features": [],
+      "segments": [],
+      "expected_observations": [],
+      "falsification_tests": [
+        "no segment differences"
+      ],
+      "plausibility": 0.6,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.0,
+      "score": 0.18,
+      "rationale": "Generated because clustering analysis found distinct groups in the data. Different segments may have different behaviors."
+    },
+    {
+      "id": "H_temporal_enforced",
+      "type": "temporal",
+      "description": "Patterns change over time",
+      "source_signals": [
+        "diversity_enforcement"
+      ],
+      "features": [],
+      "segments": [],
+      "expected_observations": [],
+      "falsification_tests": [
+        "no temporal changes"
+      ],
+      "plausibility": 0.6,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.0,
+      "score": 0.18
+    },
+    {
+      "id": "H_dq_missing",
+      "type": "data-quality",
+      "description": "Missing values are systemic, not random",
+      "source_signals": [
+        "missingness_analysis"
+      ],
+      "features": [
+        "sub_category",
+        "sales",
+        "profit"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "missingness correlates with other variables",
+        "specific segments have higher missingness"
+      ],
+      "falsification_tests": [
+        "missingness is completely random",
+        "no pattern in missing data"
+      ],
+      "plausibility": 0.8,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.5,
+      "score": 0.13999999999999999,
+      "rationale": "Generated as a fallback to ensure hypothesis diversity. May indicate signals are artifacts of data collection."
+    },
+    {
+      "id": "H_dq_outlier",
+      "type": "data-quality",
+      "description": "Outliers are data entry errors, not real signals",
+      "source_signals": [
+        "outlier_detection"
+      ],
+      "features": [
+        "sales",
+        "profit"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "outliers are exactly at round numbers",
+        "outliers are physically impossible values"
+      ],
+      "falsification_tests": [
+        "outliers are legitimate extreme values",
+        "outliers represent real phenomena"
+      ],
+      "plausibility": 0.8,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.4,
+      "score": 0.15999999999999998,
+      "rationale": "Generated as a fallback to ensure hypothesis diversity. May indicate signals are artifacts of data collection."
+    }
+  ],
+  "edges": [
+    {
+      "from_node": "H_corr_sales_profit",
+      "to_node": "H_temporal_enforced",
+      "edge_type": "competes_with"
+    },
+    {
+      "from_node": "H_dq_missing",
+      "to_node": "H_corr_sales_profit",
+      "edge_type": "competes_with"
+    }
+  ]
+}

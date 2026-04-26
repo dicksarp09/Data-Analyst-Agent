@@ -1,0 +1,87 @@
+{
+  "session_id": "f69c9753-0b60-4d92-a494-cecada48708c",
+  "accepted_hypotheses": [],
+  "rejected_hypotheses": [
+    "H_corr_profit_sales",
+    "H_corr_profit_shipping_cost",
+    "H_corr_profit_sales_per_unit",
+    "H_corr_sales_shipping_cost",
+    "H_corr_sales_sales_per_unit"
+  ],
+  "execution_history": [
+    {
+      "hypothesis_id": "H_corr_profit_sales",
+      "action": "reject",
+      "evidence": {
+        "confidence": 0.0,
+        "effect_size": 0.0,
+        "support": 0.0,
+        "decision": "reject"
+      },
+      "iteration": 0,
+      "plan_sql": "SELECT profit as x_val, AVG(sales) as avg_y, COUNT(*) as cnt FROM clean_dataset GROUP BY profit",
+      "sample_rows": [],
+      "requires_approval": false
+    },
+    {
+      "hypothesis_id": "H_corr_profit_shipping_cost",
+      "action": "reject",
+      "evidence": {
+        "confidence": 0.0,
+        "effect_size": 0.0,
+        "support": 0.0,
+        "decision": "reject"
+      },
+      "iteration": 1,
+      "plan_sql": "SELECT profit as x_val, AVG(shipping_cost) as avg_y, COUNT(*) as cnt FROM clean_dataset GROUP BY profit",
+      "sample_rows": [],
+      "requires_approval": false
+    },
+    {
+      "hypothesis_id": "H_corr_profit_sales_per_unit",
+      "action": "reject",
+      "evidence": {
+        "confidence": 0.0,
+        "effect_size": 0.0,
+        "support": 0.0,
+        "decision": "reject"
+      },
+      "iteration": 2,
+      "plan_sql": "SELECT profit as x_val, AVG(sales_per_unit) as avg_y, COUNT(*) as cnt FROM clean_dataset GROUP BY profit",
+      "sample_rows": [],
+      "requires_approval": false
+    },
+    {
+      "hypothesis_id": "H_corr_sales_shipping_cost",
+      "action": "reject",
+      "evidence": {
+        "confidence": 0.0,
+        "effect_size": 0.0,
+        "support": 0.0,
+        "decision": "reject"
+      },
+      "iteration": 3,
+      "plan_sql": "SELECT sales as x_val, AVG(shipping_cost) as avg_y, COUNT(*) as cnt FROM clean_dataset GROUP BY sales",
+      "sample_rows": [],
+      "requires_approval": false
+    },
+    {
+      "hypothesis_id": "H_corr_sales_sales_per_unit",
+      "action": "reject",
+      "evidence": {
+        "confidence": 0.0,
+        "effect_size": 0.0,
+        "support": 0.0,
+        "decision": "reject"
+      },
+      "iteration": 4,
+      "plan_sql": "SELECT sales as x_val, AVG(sales_per_unit) as avg_y, COUNT(*) as cnt FROM clean_dataset GROUP BY sales",
+      "sample_rows": [],
+      "requires_approval": false
+    }
+  ],
+  "insights": [],
+  "iteration": 5,
+  "status": "completed",
+  "approval_required": false
+}

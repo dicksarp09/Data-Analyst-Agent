@@ -1,0 +1,396 @@
+{
+  "session_id": "6b99f740-5f42-45e7-b422-6677f8c3d46b",
+  "signal_count": 25,
+  "signals": [
+    {
+      "type": "correlation",
+      "pair": [
+        "discount",
+        "profit"
+      ],
+      "strength": 0.62,
+      "p_value": 0.0239,
+      "method": "pearson",
+      "confidence": 0.9761,
+      "context": "Found strong positive relationship between discount and profit (r=0.62). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "discount",
+        "profit_margin"
+      ],
+      "strength": 0.989,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between discount and profit_margin (r=0.989). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "profit",
+        "sales"
+      ],
+      "strength": 0.69,
+      "p_value": 0.0091,
+      "method": "pearson",
+      "confidence": 0.9909,
+      "context": "Found strong positive relationship between profit and sales (r=0.69). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "profit",
+        "shipping_cost"
+      ],
+      "strength": 0.611,
+      "p_value": 0.0265,
+      "method": "pearson",
+      "confidence": 0.9735,
+      "context": "Found strong positive relationship between profit and shipping_cost (r=0.611). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "profit",
+        "sales_per_unit"
+      ],
+      "strength": 0.676,
+      "p_value": 0.0112,
+      "method": "pearson",
+      "confidence": 0.9888,
+      "context": "Found strong positive relationship between profit and sales_per_unit (r=0.676). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "sales",
+        "shipping_cost"
+      ],
+      "strength": 0.956,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between sales and shipping_cost (r=0.956). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "sales",
+        "sales_per_unit"
+      ],
+      "strength": 0.947,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between sales and sales_per_unit (r=0.947). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "shipping_cost",
+        "sales_per_unit"
+      ],
+      "strength": 0.887,
+      "p_value": 0.0001,
+      "method": "pearson",
+      "confidence": 0.9999,
+      "context": "Found strong positive relationship between shipping_cost and sales_per_unit (r=0.887). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "order_month",
+        "order_quarter"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between order_month and order_quarter (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "order_month",
+        "order_week"
+      ],
+      "strength": 0.998,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between order_month and order_week (r=0.998). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "order_quarter",
+        "order_week"
+      ],
+      "strength": 0.997,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between order_quarter and order_week (r=0.997). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "order_day_of_week",
+        "is_weekend"
+      ],
+      "strength": 0.855,
+      "p_value": 0.0002,
+      "method": "pearson",
+      "confidence": 0.9998,
+      "context": "Found strong positive relationship between order_day_of_week and is_weekend (r=0.855). These variables move together."
+    },
+    {
+      "type": "anomaly",
+      "feature": "discount",
+      "severity": "medium",
+      "method": "iqr",
+      "anomaly_count": 3,
+      "total_count": 13,
+      "confidence": 0.7692307692307692,
+      "strength": 0.46153846153846156,
+      "context": "Detected 3 unusual values in discount. These deviate significantly from the normal pattern."
+    },
+    {
+      "type": "anomaly",
+      "feature": "profit",
+      "severity": "medium",
+      "method": "iqr",
+      "anomaly_count": 1,
+      "total_count": 13,
+      "confidence": 0.9230769230769231,
+      "strength": 0.15384615384615385,
+      "context": "Detected 1 unusual values in profit. These deviate significantly from the normal pattern."
+    },
+    {
+      "type": "anomaly",
+      "feature": "quantity",
+      "severity": "high",
+      "method": "z_score",
+      "anomaly_count": 1,
+      "total_count": 13,
+      "confidence": 0.9230769230769231,
+      "strength": 0.15384615384615385,
+      "context": "Detected 1 unusual values in quantity. These deviate significantly from the normal pattern."
+    },
+    {
+      "type": "anomaly",
+      "feature": "quantity",
+      "severity": "medium",
+      "method": "iqr",
+      "anomaly_count": 3,
+      "total_count": 13,
+      "confidence": 0.7692307692307692,
+      "strength": 0.46153846153846156,
+      "context": "Detected 3 unusual values in quantity. These deviate significantly from the normal pattern."
+    },
+    {
+      "type": "anomaly",
+      "feature": "shipping_cost",
+      "severity": "medium",
+      "method": "iqr",
+      "anomaly_count": 1,
+      "total_count": 13,
+      "confidence": 0.9230769230769231,
+      "strength": 0.15384615384615385,
+      "context": "Detected 1 unusual values in shipping_cost. These deviate significantly from the normal pattern."
+    },
+    {
+      "type": "anomaly",
+      "feature": "order_year",
+      "severity": "high",
+      "method": "z_score",
+      "anomaly_count": 1,
+      "total_count": 13,
+      "confidence": 0.9230769230769231,
+      "strength": 0.15384615384615385,
+      "context": "Detected 1 unusual values in order_year. These deviate significantly from the normal pattern."
+    },
+    {
+      "type": "anomaly",
+      "feature": "order_year",
+      "severity": "medium",
+      "method": "iqr",
+      "anomaly_count": 2,
+      "total_count": 13,
+      "confidence": 0.8461538461538461,
+      "strength": 0.3076923076923077,
+      "context": "Detected 2 unusual values in order_year. These deviate significantly from the normal pattern."
+    },
+    {
+      "type": "anomaly",
+      "feature": "order_month",
+      "severity": "medium",
+      "method": "iqr",
+      "anomaly_count": 3,
+      "total_count": 13,
+      "confidence": 0.7692307692307692,
+      "strength": 0.46153846153846156,
+      "context": "Detected 3 unusual values in order_month. These deviate significantly from the normal pattern."
+    },
+    {
+      "type": "anomaly",
+      "feature": "order_quarter",
+      "severity": "medium",
+      "method": "iqr",
+      "anomaly_count": 3,
+      "total_count": 13,
+      "confidence": 0.7692307692307692,
+      "strength": 0.46153846153846156,
+      "context": "Detected 3 unusual values in order_quarter. These deviate significantly from the normal pattern."
+    },
+    {
+      "type": "anomaly",
+      "feature": "order_day_of_week",
+      "severity": "medium",
+      "method": "iqr",
+      "anomaly_count": 3,
+      "total_count": 13,
+      "confidence": 0.7692307692307692,
+      "strength": 0.46153846153846156,
+      "context": "Detected 3 unusual values in order_day_of_week. These deviate significantly from the normal pattern."
+    },
+    {
+      "type": "anomaly",
+      "feature": "is_weekend",
+      "severity": "medium",
+      "method": "iqr",
+      "anomaly_count": 2,
+      "total_count": 13,
+      "confidence": 0.8461538461538461,
+      "strength": 0.3076923076923077,
+      "context": "Detected 2 unusual values in is_weekend. These deviate significantly from the normal pattern."
+    },
+    {
+      "type": "anomaly",
+      "feature": "order_week",
+      "severity": "medium",
+      "method": "iqr",
+      "anomaly_count": 3,
+      "total_count": 13,
+      "confidence": 0.7692307692307692,
+      "strength": 0.46153846153846156,
+      "context": "Detected 3 unusual values in order_week. These deviate significantly from the normal pattern."
+    },
+    {
+      "type": "anomaly",
+      "feature": "profit_margin",
+      "severity": "medium",
+      "method": "iqr",
+      "anomaly_count": 3,
+      "total_count": 13,
+      "confidence": 0.7692307692307692,
+      "strength": 0.46153846153846156,
+      "context": "Detected 3 unusual values in profit_margin. These deviate significantly from the normal pattern."
+    }
+  ],
+  "data_summary": {
+    "total_rows": 14,
+    "total_columns": 15,
+    "numeric_columns": 12,
+    "categorical_columns": 3,
+    "date_columns": 0,
+    "column_list": [
+      "unnamed__0",
+      "discount",
+      "column",
+      "profit",
+      "quantity",
+      "sales",
+      "shipping_cost",
+      "order_year",
+      "order_month",
+      "order_quarter",
+      "order_day_of_week",
+      "is_weekend",
+      "order_week",
+      "profit_margin",
+      "sales_per_unit"
+    ],
+    "numeric_list": [
+      "discount",
+      "profit",
+      "quantity",
+      "sales",
+      "shipping_cost",
+      "order_year",
+      "order_quarter",
+      "order_day_of_week",
+      "is_weekend",
+      "order_week",
+      "profit_margin",
+      "sales_per_unit"
+    ],
+    "categorical_list": [
+      "unnamed__0",
+      "column",
+      "order_month"
+    ],
+    "date_list": [],
+    "missingness": {
+      "unnamed__0": 0.0,
+      "discount": 0.07142857142857142,
+      "column": 1.0,
+      "profit": 0.07142857142857142,
+      "quantity": 0.07142857142857142,
+      "sales": 0.07142857142857142,
+      "shipping_cost": 0.07142857142857142,
+      "order_year": 0.07142857142857142,
+      "order_month": 0.07142857142857142,
+      "order_quarter": 0.07142857142857142,
+      "order_day_of_week": 0.07142857142857142,
+      "is_weekend": 0.07142857142857142,
+      "order_week": 0.07142857142857142,
+      "profit_margin": 0.07142857142857142,
+      "sales_per_unit": 0.07142857142857142
+    },
+    "outliers": {
+      "discount": "values beyond 1.5 * IQR detected",
+      "profit": "values beyond 1.5 * IQR detected",
+      "quantity": "values beyond 1.5 * IQR detected",
+      "shipping_cost": "values beyond 1.5 * IQR detected",
+      "order_year": "values beyond 1.5 * IQR detected",
+      "order_quarter": "values beyond 1.5 * IQR detected",
+      "order_day_of_week": "values beyond 1.5 * IQR detected",
+      "is_weekend": "values beyond 1.5 * IQR detected",
+      "order_week": "values beyond 1.5 * IQR detected",
+      "profit_margin": "values beyond 1.5 * IQR detected"
+    },
+    "total_rows_raw": 14,
+    "valid_rows": 14,
+    "quarantined_rows": 0
+  },
+  "signal_insights": [
+    "Correlation: discount and profit have r=0.62 correlation",
+    "Correlation: discount and profit_margin have r=0.989 correlation",
+    "Correlation: profit and sales have r=0.69 correlation",
+    "Correlation: profit and shipping_cost have r=0.611 correlation",
+    "Correlation: profit and sales_per_unit have r=0.676 correlation",
+    "Correlation: sales and shipping_cost have r=0.956 correlation",
+    "Correlation: sales and sales_per_unit have r=0.947 correlation",
+    "Correlation: shipping_cost and sales_per_unit have r=0.887 correlation",
+    "Correlation: order_month and order_quarter have r=1.0 correlation",
+    "Correlation: order_month and order_week have r=0.998 correlation",
+    "Correlation: order_quarter and order_week have r=0.997 correlation",
+    "Correlation: order_day_of_week and is_weekend have r=0.855 correlation",
+    "Anomaly: 3 outliers found in discount",
+    "Anomaly: 1 outliers found in profit",
+    "Anomaly: 1 outliers found in quantity",
+    "Anomaly: 3 outliers found in quantity",
+    "Anomaly: 1 outliers found in shipping_cost",
+    "Anomaly: 1 outliers found in order_year",
+    "Anomaly: 2 outliers found in order_year",
+    "Anomaly: 3 outliers found in order_month",
+    "Anomaly: 3 outliers found in order_quarter",
+    "Anomaly: 3 outliers found in order_day_of_week",
+    "Anomaly: 2 outliers found in is_weekend",
+    "Anomaly: 3 outliers found in order_week",
+    "Anomaly: 3 outliers found in profit_margin"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "session_id": "d793ea52-835a-4207-b242-f0af97ff0a38",
+  "signal_count": 1,
+  "signals": [
+    {
+      "type": "correlation",
+      "pair": [
+        "sales",
+        "profit"
+      ],
+      "strength": 0.829,
+      "p_value": 0.003,
+      "method": "pearson",
+      "confidence": 0.997,
+      "context": "Found strong positive relationship between sales and profit (r=0.829). These variables move together."
+    }
+  ],
+  "data_summary": {
+    "total_rows": 10,
+    "total_columns": 3,
+    "numeric_columns": 2,
+    "categorical_columns": 1,
+    "date_columns": 0,
+    "column_list": [
+      "sub_category",
+      "sales",
+      "profit"
+    ],
+    "numeric_list": [
+      "sales",
+      "profit"
+    ],
+    "categorical_list": [
+      "sub_category"
+    ],
+    "date_list": [],
+    "missingness": {
+      "sub_category": 0.0,
+      "sales": 0.0,
+      "profit": 0.0
+    },
+    "outliers": {},
+    "total_rows_raw": 10,
+    "valid_rows": 10,
+    "quarantined_rows": 0
+  },
+  "signal_insights": [
+    "Correlation: sales and profit have r=0.829 correlation"
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "session_id": "ed18028c-efc1-4954-b3c7-f265c5075d3d",
+  "accepted_hypotheses": [],
+  "rejected_hypotheses": [
+    "H_corr_discount_column",
+    "H_corr_discount_profit",
+    "H_corr_discount_quantity",
+    "H_corr_discount_sales",
+    "H_corr_discount_shipping_cost"
+  ],
+  "execution_history": [
+    {
+      "hypothesis_id": "H_corr_discount_column",
+      "action": "reject",
+      "evidence": {
+        "confidence": 0.0,
+        "effect_size": 0.0,
+        "support": 0.0,
+        "decision": "reject"
+      },
+      "iteration": 0
+    },
+    {
+      "hypothesis_id": "H_corr_discount_profit",
+      "action": "reject",
+      "evidence": {
+        "confidence": 0.0,
+        "effect_size": 0.0,
+        "support": 0.0,
+        "decision": "reject"
+      },
+      "iteration": 1
+    },
+    {
+      "hypothesis_id": "H_corr_discount_quantity",
+      "action": "reject",
+      "evidence": {
+        "confidence": 0.0,
+        "effect_size": 0.0,
+        "support": 0.0,
+        "decision": "reject"
+      },
+      "iteration": 2
+    },
+    {
+      "hypothesis_id": "H_corr_discount_sales",
+      "action": "reject",
+      "evidence": {
+        "confidence": 0.0,
+        "effect_size": 0.0,
+        "support": 0.0,
+        "decision": "reject"
+      },
+      "iteration": 3
+    },
+    {
+      "hypothesis_id": "H_corr_discount_shipping_cost",
+      "action": "reject",
+      "evidence": {
+        "confidence": 0.0,
+        "effect_size": 0.0,
+        "support": 0.0,
+        "decision": "reject"
+      },
+      "iteration": 4
+    }
+  ],
+  "insights": [],
+  "iteration": 5,
+  "status": "completed"
+}

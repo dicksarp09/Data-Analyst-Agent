@@ -1,0 +1,79 @@
+{
+  "session_id": "e53e9887-b7a3-4cba-a042-94bd8274fb70",
+  "signal_count": 3,
+  "signals": [
+    {
+      "type": "correlation",
+      "pair": [
+        "sales",
+        "profit"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0094,
+      "method": "pearson",
+      "confidence": 0.9906,
+      "context": "Found strong positive relationship between sales and profit (r=1.0). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "sales",
+        "margin__"
+      ],
+      "strength": 0.81,
+      "p_value": 0.3992,
+      "method": "pearson",
+      "confidence": 0.6008,
+      "context": "Found strong positive relationship between sales and margin__ (r=0.81). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "profit",
+        "margin__"
+      ],
+      "strength": 0.801,
+      "p_value": 0.4086,
+      "method": "pearson",
+      "confidence": 0.5913999999999999,
+      "context": "Found strong positive relationship between profit and margin__ (r=0.801). These variables move together."
+    }
+  ],
+  "data_summary": {
+    "total_rows": 3,
+    "total_columns": 4,
+    "numeric_columns": 3,
+    "categorical_columns": 1,
+    "date_columns": 0,
+    "column_list": [
+      "segment",
+      "sales",
+      "profit",
+      "margin__"
+    ],
+    "numeric_list": [
+      "sales",
+      "profit",
+      "margin__"
+    ],
+    "categorical_list": [
+      "segment"
+    ],
+    "date_list": [],
+    "missingness": {
+      "segment": 0.0,
+      "sales": 0.0,
+      "profit": 0.0,
+      "margin__": 0.0
+    },
+    "outliers": {},
+    "total_rows_raw": 3,
+    "valid_rows": 3,
+    "quarantined_rows": 0
+  },
+  "signal_insights": [
+    "Correlation: sales and profit have r=1.0 correlation",
+    "Correlation: sales and margin__ have r=0.81 correlation",
+    "Correlation: profit and margin__ have r=0.801 correlation"
+  ]
+}

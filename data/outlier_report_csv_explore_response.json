@@ -1,0 +1,120 @@
+{
+  "session_id": "92a3d048-c582-4ff6-a07d-6c0a92a19f88",
+  "signal_count": 6,
+  "signals": [
+    {
+      "type": "correlation",
+      "pair": [
+        "lower_bound",
+        "upper_bound"
+      ],
+      "strength": 0.909,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between lower_bound and upper_bound (r=0.909). These variables move together."
+    },
+    {
+      "type": "correlation",
+      "pair": [
+        "outliers_count",
+        "outlier_percentage"
+      ],
+      "strength": 1.0,
+      "p_value": 0.0,
+      "method": "pearson",
+      "confidence": 1.0,
+      "context": "Found strong positive relationship between outliers_count and outlier_percentage (r=1.0). These variables move together."
+    },
+    {
+      "type": "anomaly",
+      "feature": "lower_bound",
+      "severity": "high",
+      "method": "z_score",
+      "anomaly_count": 1,
+      "total_count": 14,
+      "confidence": 0.9285714285714286,
+      "strength": 0.14285714285714285,
+      "context": "Detected 1 unusual values in lower_bound. These deviate significantly from the normal pattern."
+    },
+    {
+      "type": "anomaly",
+      "feature": "lower_bound",
+      "severity": "medium",
+      "method": "iqr",
+      "anomaly_count": 2,
+      "total_count": 14,
+      "confidence": 0.8571428571428572,
+      "strength": 0.2857142857142857,
+      "context": "Detected 2 unusual values in lower_bound. These deviate significantly from the normal pattern."
+    },
+    {
+      "type": "anomaly",
+      "feature": "upper_bound",
+      "severity": "high",
+      "method": "z_score",
+      "anomaly_count": 1,
+      "total_count": 14,
+      "confidence": 0.9285714285714286,
+      "strength": 0.14285714285714285,
+      "context": "Detected 1 unusual values in upper_bound. These deviate significantly from the normal pattern."
+    },
+    {
+      "type": "anomaly",
+      "feature": "upper_bound",
+      "severity": "medium",
+      "method": "iqr",
+      "anomaly_count": 2,
+      "total_count": 14,
+      "confidence": 0.8571428571428572,
+      "strength": 0.2857142857142857,
+      "context": "Detected 2 unusual values in upper_bound. These deviate significantly from the normal pattern."
+    }
+  ],
+  "data_summary": {
+    "total_rows": 14,
+    "total_columns": 5,
+    "numeric_columns": 4,
+    "categorical_columns": 1,
+    "date_columns": 0,
+    "column_list": [
+      "column",
+      "lower_bound",
+      "upper_bound",
+      "outliers_count",
+      "outlier_percentage"
+    ],
+    "numeric_list": [
+      "lower_bound",
+      "upper_bound",
+      "outliers_count",
+      "outlier_percentage"
+    ],
+    "categorical_list": [
+      "column"
+    ],
+    "date_list": [],
+    "missingness": {
+      "column": 0.0,
+      "lower_bound": 0.0,
+      "upper_bound": 0.0,
+      "outliers_count": 0.0,
+      "outlier_percentage": 0.0
+    },
+    "outliers": {
+      "lower_bound": "values beyond 1.5 * IQR detected",
+      "upper_bound": "values beyond 1.5 * IQR detected"
+    },
+    "total_rows_raw": 14,
+    "valid_rows": 14,
+    "quarantined_rows": 0
+  },
+  "signal_insights": [
+    "Correlation: lower_bound and upper_bound have r=0.909 correlation",
+    "Correlation: outliers_count and outlier_percentage have r=1.0 correlation",
+    "Anomaly: 1 outliers found in lower_bound",
+    "Anomaly: 2 outliers found in lower_bound",
+    "Anomaly: 1 outliers found in upper_bound",
+    "Anomaly: 2 outliers found in upper_bound"
+  ]
+}

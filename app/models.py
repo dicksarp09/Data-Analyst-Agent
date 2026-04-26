@@ -7,6 +7,7 @@ class UploadResponse(BaseModel):
     checksum: str
     file_size: int
     message: str
+    first_screen: dict = {}
 
 
 class SchemaInfo(BaseModel):
@@ -89,6 +90,7 @@ class ExecutionResponse(BaseModel):
     insights: list
     iteration: int
     status: str
+    approval_required: bool = False
 
 
 class Phase4Request(BaseModel):

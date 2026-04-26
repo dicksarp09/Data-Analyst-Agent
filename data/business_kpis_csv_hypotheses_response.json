@@ -1,0 +1,69 @@
+{
+  "session_id": "13cb73c6-fd81-4f31-a62f-f1f610b9ad32",
+  "node_count": 3,
+  "edge_count": 0,
+  "execution_order": [
+    "H_dq_enforced",
+    "H_temporal_enforced",
+    "H_segment_enforced"
+  ],
+  "nodes": [
+    {
+      "id": "H_segment_enforced",
+      "type": "segment-based",
+      "description": "Effects vary across user segments",
+      "source_signals": [
+        "diversity_enforcement"
+      ],
+      "features": [],
+      "segments": [],
+      "expected_observations": [],
+      "falsification_tests": [
+        "no segment differences"
+      ],
+      "plausibility": 0.6,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.0,
+      "score": 0.18,
+      "rationale": "Generated because clustering analysis found distinct groups in the data. Different segments may have different behaviors."
+    },
+    {
+      "id": "H_temporal_enforced",
+      "type": "temporal",
+      "description": "Patterns change over time",
+      "source_signals": [
+        "diversity_enforcement"
+      ],
+      "features": [],
+      "segments": [],
+      "expected_observations": [],
+      "falsification_tests": [
+        "no temporal changes"
+      ],
+      "plausibility": 0.6,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.0,
+      "score": 0.18
+    },
+    {
+      "id": "H_dq_enforced",
+      "type": "data-quality",
+      "description": "Signals may be artifacts of data collection",
+      "source_signals": [
+        "diversity_enforcement"
+      ],
+      "features": [],
+      "segments": [],
+      "expected_observations": [],
+      "falsification_tests": [
+        "data is clean and correct"
+      ],
+      "plausibility": 0.8,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.0,
+      "score": 0.24,
+      "rationale": "Generated as a fallback to ensure hypothesis diversity. May indicate signals are artifacts of data collection."
+    }
+  ],
+  "edges": []
+}

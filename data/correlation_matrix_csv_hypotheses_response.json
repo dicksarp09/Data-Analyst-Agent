@@ -1,0 +1,360 @@
+{
+  "session_id": "6b99f740-5f42-45e7-b422-6677f8c3d46b",
+  "node_count": 13,
+  "edge_count": 4,
+  "execution_order": [
+    "H_dq_enforced",
+    "H_temporal_enforced",
+    "H_segment_enforced",
+    "H_corr_shipping_cost_sales_per_unit",
+    "H_corr_sales_shipping_cost",
+    "H_corr_sales_sales_per_unit",
+    "H_corr_profit_shipping_cost",
+    "H_corr_profit_sales_per_unit",
+    "H_corr_profit_sales",
+    "H_corr_order_month_order_week",
+    "H_corr_order_month_order_quarter",
+    "H_corr_discount_profit_margin",
+    "H_corr_discount_profit"
+  ],
+  "nodes": [
+    {
+      "id": "H_corr_discount_profit",
+      "type": "causal",
+      "description": "discount influences profit with strength 0.62",
+      "source_signals": [
+        "correlation_discount_profit"
+      ],
+      "features": [
+        "discount",
+        "profit"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "discount increases when profit increases",
+        "relationship holds across all segments"
+      ],
+      "falsification_tests": [
+        "no correlation between discount and profit",
+        "correlation is spurious"
+      ],
+      "plausibility": 0.5,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.4,
+      "score": 0.06999999999999998,
+      "rationale": "Generated because a strong correlation was detected between variables. This suggests a potential causal relationship worth testing."
+    },
+    {
+      "id": "H_corr_discount_profit_margin",
+      "type": "causal",
+      "description": "discount influences profit_margin with strength 0.989",
+      "source_signals": [
+        "correlation_discount_profit_margin"
+      ],
+      "features": [
+        "discount",
+        "profit_margin"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "discount increases when profit_margin increases",
+        "relationship holds across all segments"
+      ],
+      "falsification_tests": [
+        "no correlation between discount and profit_margin",
+        "correlation is spurious"
+      ],
+      "plausibility": 0.5,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.4,
+      "score": 0.06999999999999998,
+      "rationale": "Generated because a strong correlation was detected between variables. This suggests a potential causal relationship worth testing."
+    },
+    {
+      "id": "H_corr_profit_sales",
+      "type": "causal",
+      "description": "profit influences sales with strength 0.69",
+      "source_signals": [
+        "correlation_profit_sales"
+      ],
+      "features": [
+        "profit",
+        "sales"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "profit increases when sales increases",
+        "relationship holds across all segments"
+      ],
+      "falsification_tests": [
+        "no correlation between profit and sales",
+        "correlation is spurious"
+      ],
+      "plausibility": 0.5,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.4,
+      "score": 0.06999999999999998,
+      "rationale": "Generated because a strong correlation was detected between variables. This suggests a potential causal relationship worth testing."
+    },
+    {
+      "id": "H_corr_profit_shipping_cost",
+      "type": "causal",
+      "description": "profit influences shipping_cost with strength 0.611",
+      "source_signals": [
+        "correlation_profit_shipping_cost"
+      ],
+      "features": [
+        "profit",
+        "shipping_cost"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "profit increases when shipping_cost increases",
+        "relationship holds across all segments"
+      ],
+      "falsification_tests": [
+        "no correlation between profit and shipping_cost",
+        "correlation is spurious"
+      ],
+      "plausibility": 0.5,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.4,
+      "score": 0.06999999999999998,
+      "rationale": "Generated because a strong correlation was detected between variables. This suggests a potential causal relationship worth testing."
+    },
+    {
+      "id": "H_corr_profit_sales_per_unit",
+      "type": "causal",
+      "description": "profit influences sales_per_unit with strength 0.676",
+      "source_signals": [
+        "correlation_profit_sales_per_unit"
+      ],
+      "features": [
+        "profit",
+        "sales_per_unit"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "profit increases when sales_per_unit increases",
+        "relationship holds across all segments"
+      ],
+      "falsification_tests": [
+        "no correlation between profit and sales_per_unit",
+        "correlation is spurious"
+      ],
+      "plausibility": 0.5,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.4,
+      "score": 0.06999999999999998,
+      "rationale": "Generated because a strong correlation was detected between variables. This suggests a potential causal relationship worth testing."
+    },
+    {
+      "id": "H_corr_sales_shipping_cost",
+      "type": "causal",
+      "description": "sales influences shipping_cost with strength 0.956",
+      "source_signals": [
+        "correlation_sales_shipping_cost"
+      ],
+      "features": [
+        "sales",
+        "shipping_cost"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "sales increases when shipping_cost increases",
+        "relationship holds across all segments"
+      ],
+      "falsification_tests": [
+        "no correlation between sales and shipping_cost",
+        "correlation is spurious"
+      ],
+      "plausibility": 0.5,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.4,
+      "score": 0.06999999999999998,
+      "rationale": "Generated because a strong correlation was detected between variables. This suggests a potential causal relationship worth testing."
+    },
+    {
+      "id": "H_corr_sales_sales_per_unit",
+      "type": "causal",
+      "description": "sales influences sales_per_unit with strength 0.947",
+      "source_signals": [
+        "correlation_sales_sales_per_unit"
+      ],
+      "features": [
+        "sales",
+        "sales_per_unit"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "sales increases when sales_per_unit increases",
+        "relationship holds across all segments"
+      ],
+      "falsification_tests": [
+        "no correlation between sales and sales_per_unit",
+        "correlation is spurious"
+      ],
+      "plausibility": 0.5,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.4,
+      "score": 0.06999999999999998,
+      "rationale": "Generated because a strong correlation was detected between variables. This suggests a potential causal relationship worth testing."
+    },
+    {
+      "id": "H_corr_shipping_cost_sales_per_unit",
+      "type": "causal",
+      "description": "shipping_cost influences sales_per_unit with strength 0.887",
+      "source_signals": [
+        "correlation_shipping_cost_sales_per_unit"
+      ],
+      "features": [
+        "shipping_cost",
+        "sales_per_unit"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "shipping_cost increases when sales_per_unit increases",
+        "relationship holds across all segments"
+      ],
+      "falsification_tests": [
+        "no correlation between shipping_cost and sales_per_unit",
+        "correlation is spurious"
+      ],
+      "plausibility": 0.5,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.4,
+      "score": 0.06999999999999998,
+      "rationale": "Generated because a strong correlation was detected between variables. This suggests a potential causal relationship worth testing."
+    },
+    {
+      "id": "H_corr_order_month_order_quarter",
+      "type": "causal",
+      "description": "order_month influences order_quarter with strength 1.0",
+      "source_signals": [
+        "correlation_order_month_order_quarter"
+      ],
+      "features": [
+        "order_month",
+        "order_quarter"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "order_month increases when order_quarter increases",
+        "relationship holds across all segments"
+      ],
+      "falsification_tests": [
+        "no correlation between order_month and order_quarter",
+        "correlation is spurious"
+      ],
+      "plausibility": 0.5,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.4,
+      "score": 0.06999999999999998,
+      "rationale": "Generated because a strong correlation was detected between variables. This suggests a potential causal relationship worth testing."
+    },
+    {
+      "id": "H_corr_order_month_order_week",
+      "type": "causal",
+      "description": "order_month influences order_week with strength 0.998",
+      "source_signals": [
+        "correlation_order_month_order_week"
+      ],
+      "features": [
+        "order_month",
+        "order_week"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "order_month increases when order_week increases",
+        "relationship holds across all segments"
+      ],
+      "falsification_tests": [
+        "no correlation between order_month and order_week",
+        "correlation is spurious"
+      ],
+      "plausibility": 0.5,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.4,
+      "score": 0.06999999999999998,
+      "rationale": "Generated because a strong correlation was detected between variables. This suggests a potential causal relationship worth testing."
+    },
+    {
+      "id": "H_segment_enforced",
+      "type": "segment-based",
+      "description": "Effects vary across user segments",
+      "source_signals": [
+        "diversity_enforcement"
+      ],
+      "features": [],
+      "segments": [],
+      "expected_observations": [],
+      "falsification_tests": [
+        "no segment differences"
+      ],
+      "plausibility": 0.6,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.0,
+      "score": 0.18,
+      "rationale": "Generated because clustering analysis found distinct groups in the data. Different segments may have different behaviors."
+    },
+    {
+      "id": "H_temporal_enforced",
+      "type": "temporal",
+      "description": "Patterns change over time",
+      "source_signals": [
+        "diversity_enforcement"
+      ],
+      "features": [],
+      "segments": [],
+      "expected_observations": [],
+      "falsification_tests": [
+        "no temporal changes"
+      ],
+      "plausibility": 0.6,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.0,
+      "score": 0.18
+    },
+    {
+      "id": "H_dq_enforced",
+      "type": "data-quality",
+      "description": "Signals may be artifacts of data collection",
+      "source_signals": [
+        "diversity_enforcement"
+      ],
+      "features": [],
+      "segments": [],
+      "expected_observations": [],
+      "falsification_tests": [
+        "data is clean and correct"
+      ],
+      "plausibility": 0.8,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.0,
+      "score": 0.24,
+      "rationale": "Generated as a fallback to ensure hypothesis diversity. May indicate signals are artifacts of data collection."
+    }
+  ],
+  "edges": [
+    {
+      "from_node": "H_corr_discount_profit",
+      "to_node": "H_temporal_enforced",
+      "edge_type": "competes_with"
+    },
+    {
+      "from_node": "H_corr_discount_profit_margin",
+      "to_node": "H_temporal_enforced",
+      "edge_type": "competes_with"
+    },
+    {
+      "from_node": "H_dq_enforced",
+      "to_node": "H_corr_discount_profit",
+      "edge_type": "competes_with"
+    },
+    {
+      "from_node": "H_dq_enforced",
+      "to_node": "H_corr_discount_profit_margin",
+      "edge_type": "competes_with"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "session_id": "d793ea52-835a-4207-b242-f0af97ff0a38",
+  "accepted_hypotheses": [
+    "H_segment_enforced"
+  ],
+  "rejected_hypotheses": [
+    "H_corr_sales_profit"
+  ],
+  "execution_history": [
+    {
+      "hypothesis_id": "H_corr_sales_profit",
+      "action": "reject",
+      "evidence": {
+        "confidence": 0.0,
+        "effect_size": 0.0,
+        "support": 0.0,
+        "decision": "reject"
+      },
+      "iteration": 0
+    },
+    {
+      "hypothesis_id": "H_segment_enforced",
+      "action": "accept",
+      "evidence": {
+        "confidence": 1.0,
+        "effect_size": 0.3,
+        "support": 1.0,
+        "decision": "accept"
+      },
+      "iteration": 1
+    }
+  ],
+  "insights": [
+    {
+      "insight": "Behavioral differences detected. Effects vary across user segments Confidence: 1.00.",
+      "confidence": 1.0,
+      "hypothesis_id": "H_segment_enforced",
+      "effect_size": 0.3,
+      "type": "segment-based",
+      "generated_at": "execution"
+    }
+  ],
+  "iteration": 2,
+  "status": "completed"
+}

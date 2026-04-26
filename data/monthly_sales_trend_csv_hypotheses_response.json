@@ -1,0 +1,236 @@
+{
+  "session_id": "54092905-36c2-4270-8633-4780252fa830",
+  "node_count": 8,
+  "edge_count": 3,
+  "execution_order": [
+    "H_segment_enforced",
+    "H_dq_outlier",
+    "H_dq_missing",
+    "H_trend_sales",
+    "H_trend_profit",
+    "H_shift_sales",
+    "H_shift_profit",
+    "H_corr_sales_profit"
+  ],
+  "nodes": [
+    {
+      "id": "H_corr_sales_profit",
+      "type": "causal",
+      "description": "sales influences profit with strength 0.945",
+      "source_signals": [
+        "correlation_sales_profit"
+      ],
+      "features": [
+        "sales",
+        "profit"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "sales increases when profit increases",
+        "relationship holds across all segments"
+      ],
+      "falsification_tests": [
+        "no correlation between sales and profit",
+        "correlation is spurious"
+      ],
+      "plausibility": 0.5,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.4,
+      "score": 0.06999999999999998,
+      "rationale": "Generated because a strong correlation was detected between variables. This suggests a potential causal relationship worth testing."
+    },
+    {
+      "id": "H_segment_enforced",
+      "type": "segment-based",
+      "description": "Effects vary across user segments",
+      "source_signals": [
+        "diversity_enforcement"
+      ],
+      "features": [],
+      "segments": [],
+      "expected_observations": [],
+      "falsification_tests": [
+        "no segment differences"
+      ],
+      "plausibility": 0.6,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.0,
+      "score": 0.18,
+      "rationale": "Generated because clustering analysis found distinct groups in the data. Different segments may have different behaviors."
+    },
+    {
+      "id": "H_shift_sales",
+      "type": "temporal",
+      "description": "Distribution of sales shifted over time (early=205708.5, late=321079.21)",
+      "source_signals": [
+        "shift_sales"
+      ],
+      "features": [
+        "sales"
+      ],
+      "segments": [
+        "early",
+        "late"
+      ],
+      "expected_observations": [
+        "sales mean changed from 205708.5 to 321079.21",
+        "shift is statistically significant"
+      ],
+      "falsification_tests": [
+        "shift is within normal variance",
+        "both periods have same distribution"
+      ],
+      "plausibility": 0.6,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.5,
+      "score": 0.07999999999999999
+    },
+    {
+      "id": "H_shift_profit",
+      "type": "temporal",
+      "description": "Distribution of profit shifted over time (early=23181.5, late=37962.55)",
+      "source_signals": [
+        "shift_profit"
+      ],
+      "features": [
+        "profit"
+      ],
+      "segments": [
+        "early",
+        "late"
+      ],
+      "expected_observations": [
+        "profit mean changed from 23181.5 to 37962.55",
+        "shift is statistically significant"
+      ],
+      "falsification_tests": [
+        "shift is within normal variance",
+        "both periods have same distribution"
+      ],
+      "plausibility": 0.6,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.5,
+      "score": 0.07999999999999999
+    },
+    {
+      "id": "H_trend_sales",
+      "type": "temporal",
+      "description": "Trend break in sales at 47 with magnitude 48887.2",
+      "source_signals": [
+        "trend_break_sales"
+      ],
+      "features": [
+        "sales"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "significant change in sales after 47",
+        "change is sustained over subsequent periods"
+      ],
+      "falsification_tests": [
+        "change point is transient",
+        "no structural change occurred"
+      ],
+      "plausibility": 0.6,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.3,
+      "score": 0.12,
+      "rationale": "Generated because a structural break was detected in the trend. The pattern changed at a specific point."
+    },
+    {
+      "id": "H_trend_profit",
+      "type": "temporal",
+      "description": "Trend break in profit at 44 with magnitude 8839.43",
+      "source_signals": [
+        "trend_break_profit"
+      ],
+      "features": [
+        "profit"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "significant change in profit after 44",
+        "change is sustained over subsequent periods"
+      ],
+      "falsification_tests": [
+        "change point is transient",
+        "no structural change occurred"
+      ],
+      "plausibility": 0.6,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.3,
+      "score": 0.12,
+      "rationale": "Generated because a structural break was detected in the trend. The pattern changed at a specific point."
+    },
+    {
+      "id": "H_dq_missing",
+      "type": "data-quality",
+      "description": "Missing values are systemic, not random",
+      "source_signals": [
+        "missingness_analysis"
+      ],
+      "features": [
+        "order_date",
+        "sales",
+        "profit"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "missingness correlates with other variables",
+        "specific segments have higher missingness"
+      ],
+      "falsification_tests": [
+        "missingness is completely random",
+        "no pattern in missing data"
+      ],
+      "plausibility": 0.8,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.5,
+      "score": 0.13999999999999999,
+      "rationale": "Generated as a fallback to ensure hypothesis diversity. May indicate signals are artifacts of data collection."
+    },
+    {
+      "id": "H_dq_outlier",
+      "type": "data-quality",
+      "description": "Outliers are data entry errors, not real signals",
+      "source_signals": [
+        "outlier_detection"
+      ],
+      "features": [
+        "sales",
+        "profit"
+      ],
+      "segments": [],
+      "expected_observations": [
+        "outliers are exactly at round numbers",
+        "outliers are physically impossible values"
+      ],
+      "falsification_tests": [
+        "outliers are legitimate extreme values",
+        "outliers represent real phenomena"
+      ],
+      "plausibility": 0.8,
+      "signal_support": 0.0,
+      "complexity_penalty": 0.4,
+      "score": 0.15999999999999998,
+      "rationale": "Generated as a fallback to ensure hypothesis diversity. May indicate signals are artifacts of data collection."
+    }
+  ],
+  "edges": [
+    {
+      "from_node": "H_corr_sales_profit",
+      "to_node": "H_shift_sales",
+      "edge_type": "competes_with"
+    },
+    {
+      "from_node": "H_corr_sales_profit",
+      "to_node": "H_shift_profit",
+      "edge_type": "competes_with"
+    },
+    {
+      "from_node": "H_dq_missing",
+      "to_node": "H_corr_sales_profit",
+      "edge_type": "competes_with"
+    }
+  ]
+}
